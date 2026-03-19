@@ -1,0 +1,4 @@
+Code: H01 / Name: Pantai Hospital Kuala Lumpur / Address: 8, Jalan Bukit Pantai, Bangsar / Phone Number: NULL / Items Distributed: HC, FS, MS, GL, GW, SC
+Code: H02 / Name: Ampang Hospital / Address: Jalan Mewah Utara, Taman Pandan Mewah / Phone Number: 03-4289 6000 
+Code: H03 / Name: Hospital Fatimah / Address: Lot 154, Jalan Bunga 1 / Phone Number: 05-545 5777  / Items Distributed: HC, FS, MS, GL, GW, SC
+Code: H04 / Name: KMI Taman Desa Medical Centre / Address: 45, Jalan Desa, Off, Old Klang Rd, Taman Desa / Phone Number: 12345678 

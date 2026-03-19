@@ -1,0 +1,11 @@
+Transaction ID: 1 / Item Code: HS / Quantity: 3 / Transaction Type: Resupply / Hospital/Supplier Code: S03 / Date: 22/12/2024 / Time: 14:55
+Transaction ID: 2 / Item Code: GS / Quantity: 10 / Transaction Type: Distribution / Hospital/Supplier Code: H01 / Date: 02/02/2025 / Time: 14:00
+Transaction ID: 3 / Item Code: FS / Quantity: 300 / Transaction Type: Resupply / Hospital/Supplier Code: S01 / Date: 09/11/2001 / Time: 12:15
+Transaction ID: 4 / Item Code: HC / Quantity: 5000 / Transaction Type: Resupply / Hospital/Supplier Code: S01 / Date: 30/09/2025 / Time: 20:34
+Transaction ID: 5 / Item Code: FS / Quantity: 20000 / Transaction Type: Resupply / Hospital/Supplier Code: S01 / Date: 03/07/2001 / Time: 14:44
+Transaction ID: 6 / Item Code: FS / Quantity: 500 / Transaction Type: Resupply / Hospital/Supplier Code: S01 / Date: 20/09/1989 / Time: 13:09
+Transaction ID: 7 / Item Code: FS / Quantity: 10 / Transaction Type: Distribution / Hospital/Supplier Code: H01 / Date: 23/02/2005 / Time: 23:39
+Transaction ID: 8 / Item Code: GL / Quantity: 60 / Transaction Type: Distribution / Hospital/Supplier Code: H03 / Date: 23/01/2002 / Time: 02:02
+Transaction ID: 9 / Item Code: SC / Quantity: 100 / Transaction Type: Distribution / Hospital/Supplier Code: H03 / Date: 04/05/1999 / Time: 08:30
+Transaction ID: 10 / Item Code: FS / Quantity: 100 / Transaction Type: Resupply / Hospital/Supplier Code: S01 / Date: 04/05/2025 / Time: 22:00
+Transaction ID: 11 / Item Code: GL / Quantity: 50 / Transaction Type: Resupply / Hospital/Supplier Code: S02 / Date: 09/10/2024 / Time: 13:45

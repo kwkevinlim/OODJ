@@ -1,0 +1,6 @@
+Item Code: FS / Item Name: Face Shield / Quantity: 20600 / Supplier: S01
+Item Code: GL / Item Name: Gloves / Quantity: 90 / Supplier: S02
+Item Code: GW / Item Name: Gown / Quantity: 100 / Supplier: S03
+Item Code: HC / Item Name: Head Cover / Quantity: 100 / Supplier: S01
+Item Code: MS / Item Name: Mask / Quantity: 25 / Supplier: S02
+Item Code: SC / Item Name: Shoe Covers / Quantity: 0 / Supplier: S03
