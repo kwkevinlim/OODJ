@@ -1,12 +1,1 @@
-UserID: 1 / Username: ds / Password: ds / Role: Admin
-UserID: 2 / Username: dsd / Password: ds / Role: Admin
-UserID: 3 / Username: qweasd / Password: eqwads / Role: Admin
-UserID: 4 / Username: asdwead / Password: weads / Role: Staff
-UserID: 5 / Username: ikujy / Password: yujnh / Role: Staff
-UserID: 6 / Username: ewdsgm / Password: fnd / Role: Staff
 
-UserID: 8 / Username: ertsq / Password: qewd / Role: Admin
-
-UserID: 10 / Username: qwefadhew / Password: yujnh / Role: Admin
-
-UserID: 12 / Username: qwefqadhew / Password: yujnh / Role: Staff

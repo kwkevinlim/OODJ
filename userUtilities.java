@@ -46,7 +46,7 @@ public abstract class UserUtils {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(" / ");
+                String[] parts = line.split(" | ");
                 if (parts.length == 4) {
                     String storedUsername = parts[1].split(": ")[1].trim();
                     if (storedUsername.equals(username)) {
@@ -69,7 +69,7 @@ public abstract class UserUtils {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty() && !filledBlank) {
-                    lines.add("UserID: " + userID + " / Username: " + username + " / Password: " + password + " / Role: " + selectedRole);
+                    lines.add("UserID: " + userID + " | Username: " + username + " | Password: " + password + " / Role: " + selectedRole);
                     filledBlank = true;
                 } else {
                     lines.add(line);
@@ -79,7 +79,7 @@ public abstract class UserUtils {
                 }
             }
             if (!filledBlank) {
-                lines.add("UserID: " + userID + " / Username: " + username + " / Password: " + password + " / Role: " + selectedRole);
+                lines.add("UserID: " + userID + " | Username: " + username + " | Password: " + password + " / Role: " + selectedRole);
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(frame, "Error reading file.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -102,7 +102,7 @@ public abstract class UserUtils {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
-                String[] parts = line.split(" / ");
+                String[] parts = line.split(" | ");
                 String userId = parts[0].split(": ")[1];
                 String username = parts[1].split(": ")[1];
                 String password = parts[2].split(": ")[1];

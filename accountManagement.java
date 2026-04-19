@@ -44,7 +44,7 @@ public class accountManagement extends JFrame {
 			} else if ((source.getText()).equals("Update User Details")) {
 				new accountUpdate();
 			} else if ((source.getText()).equals("Return")) {
-				new adminPage();
+				new managerPage();
 			}
 			dispose();
 		}

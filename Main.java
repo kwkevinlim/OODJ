@@ -15,7 +15,7 @@ public class Main implements ActionListener{
     private JPasswordField userPasswordField = new JPasswordField();
     private JLabel usernameLabel = new JLabel("Username: ");
     private JLabel userPasswordLabel = new JLabel("Password: ");
-    private JLabel messageLabel = new JLabel("PPE Management Login/Sign up Page");
+    private JLabel messageLabel = new JLabel("APU Car Service Center Login/Sign up Page");
     private JLabel messageLabel2 = new JLabel("");
 
     //GUI
@@ -83,6 +83,7 @@ public class Main implements ActionListener{
                 messageLabel2.setText("Please make sure both fields are filled out.");
                 return;
             }
+            //to check if spaces in username will affect the program (2)
             if (userID.contains(" ")) {
                 messageLabel2.setForeground(Color.red);
                 messageLabel2.setText("Username cannot include spaces.");
@@ -110,14 +111,24 @@ public class Main implements ActionListener{
             }
 
             String role = (userLogin(userID, userPassword)); 
-            if ("Admin".equals(role)) {
+            if ("Manager".equals(role)) {
                 UserUtils.setSessionRole(role);
-                new adminPage();
+                new managerPage();
                 frame.dispose();
             }
-            else if ("Staff".equals(role)) {
+            else if ("Technician".equals(role)) {
                 UserUtils.setSessionRole(role);
-                new staffPage();
+                new technicianPage();
+                frame.dispose();
+            } 
+            else if ("Counter Staff".equals(role)) {
+                UserUtils.setSessionRole(role);
+                new csPage();
+                frame.dispose();
+            } 
+            else if ("Customer".equals(role)) {
+                UserUtils.setSessionRole(role);
+                new customerPage();
                 frame.dispose();
             } 
             else{
@@ -132,7 +143,7 @@ public class Main implements ActionListener{
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))){
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(" / ");
+                String[] parts = line.split(" | ");
                 if (parts.length == 4) {
                     String storedUsername = parts[1].split(": ")[1].trim();
                     String storedPassword = parts[2].split(": ")[1].trim();

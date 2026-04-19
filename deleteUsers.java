@@ -25,7 +25,7 @@ public class deleteUsers extends JFrame implements ActionListener {
 		String[] columns = {"User ID", "Username", "Password", "User Role"};
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		table = new JTable(model);
-		UserUtils.loadUserData(model);
+		userUtilities.loadUserData(model);
 		add(new JScrollPane(table), "Center");
 
         searchTextField.setPreferredSize(new Dimension(100, 25));
@@ -78,7 +78,7 @@ public class deleteUsers extends JFrame implements ActionListener {
                     }
                     boolean match = false;
                     if (!line.trim().isEmpty()) {
-                        String[] parts = line.split(" / ");
+                        String[] parts = line.split(" | ");
                         if (parts.length >= 4) {
                             String id = parts[0].split(": ")[1].trim();
                             String name = parts[1].split(": ")[1].trim();

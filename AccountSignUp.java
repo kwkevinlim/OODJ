@@ -35,8 +35,10 @@ public class AccountSignUp implements ActionListener {
 
         rolebutton.addActionListener(this);
 
-        choice.add("Admin");
-        choice.add("Staff");
+        choice.add("Manager");
+        choice.add("Technician");
+        choice.add("Counter Staff");
+        choice.add("Customer");
 
         frame.add(choice);
         frame.add(rolebutton);

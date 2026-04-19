@@ -44,8 +44,10 @@ public class usersDatabase extends JFrame implements ActionListener {
         returnButton.setFocusable(false);
 
 		roleChoice.add("View All");
-		roleChoice.add("Admin");
-		roleChoice.add("Staff");
+		roleChoice.add("Managers");
+		roleChoice.add("Counter Staffs");
+		roleChoice.add("Technicians");
+		roleChoice.add("Customers");
 
 		JPanel panel = new JPanel();
 		panel.add(searchLabel);
@@ -77,7 +79,7 @@ public class usersDatabase extends JFrame implements ActionListener {
 			try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
 				String line;
 				while ((line = reader.readLine()) != null) {
-					String[] parts = line.split(" / ");
+					String[] parts = line.split(" | ");
 					if (parts.length < 4) { continue; }
 					String userId = parts[0].split(": ")[1];
 					String username = parts[1].split(": ")[1];

@@ -31,7 +31,8 @@ public class addNewUser implements ActionListener {
         cancelButton.setBounds(210, 200, 100, 30);
         roleComboBox.setBounds(140, 150, 200, 25);
 
-        roleComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Select Role", "Admin", "Staff"}));
+        roleComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Select Role", "Manager", 
+        "Technician", "Counter Staff", "Customer"}));
 
         messageLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         registerButton.setBackground(new Color(0, 180, 0));
@@ -62,6 +63,8 @@ public class addNewUser implements ActionListener {
             String password = new String(passwordField.getPassword());
             String role = (String) roleComboBox.getSelectedItem();
 
+
+            //to check if spaces in the username actually affect the program
             if (username.contains(" ") || password.contains(" ")){
                 JOptionPane.showMessageDialog(frame,"Username/Password cannot contain spaces.");
                 return;

@@ -24,8 +24,10 @@ public class accountUpdate implements ActionListener{
     private JButton searchButton = new JButton("Search");
     private JButton updateButton = new JButton("Update");
     private JButton returnButton = new JButton("Return");
-    private JButton staffButton = new JButton("Staff");
-    private JButton adminButton = new JButton("Admin");
+    private JButton managerButton = new JButton("Manager");
+    private JButton technicianButton = new JButton("Technician");
+    private JButton csButton = new JButton("Counter Staff");
+    private JButton customerButton = new JButton("Customer");
     private JButton resetButton = new JButton("Reset");
 
     private String originalUsername = "";
@@ -53,10 +55,14 @@ public class accountUpdate implements ActionListener{
         passwordLabel.setBounds(300, 110, 80, 25);
         userIDLabel2.setBounds(67,60,60,25);
         roleLabel2.setBounds(155,60,100,25);
-        staffButton.setBounds(260, 60, 80 ,25);
-        adminButton.setBounds(360, 60, 80 ,25);
+        //placeholder sizes, to be adjusted once running
+        managerButton.setBounds(260, 60, 80 ,25);
+        technicianButton.setBounds(360, 60, 80 ,25);
+        csButton.setBounds(260, 60, 80 ,25);
+        customerButton.setBounds(360, 60, 80 ,25);
 
-        JButton[] buttons = {searchButton, updateButton, staffButton, adminButton, resetButton};
+        JButton[] buttons = {searchButton, updateButton, managerButton, 
+        technicianButton, csButton, customerButton, resetButton};
         for (JButton button : buttons) {
             button.setFocusable(false);
             button.addActionListener(this);
@@ -81,8 +87,10 @@ public class accountUpdate implements ActionListener{
 		frame.add(returnButton);
         frame.add(resetButton);
         frame.add(roleLabel2);
-        frame.add(staffButton);
-        frame.add(adminButton);
+        frame.add(managerButton);
+        frame.add(technicianButton);
+        frame.add(csButton);
+        frame.add(customerButton);
         frame.add(userIDLabel2);
 
     }
@@ -98,10 +106,14 @@ public class accountUpdate implements ActionListener{
             passwordField.setText("");
             roleLabel2.setText("");
             userIDLabel2.setText("");
-        } else if (e.getSource()==staffButton) {
-            roleLabel2.setText("Staff");
-        } else if (e.getSource()==adminButton) {
-            roleLabel2.setText("Admin");
+        } else if (e.getSource()==managerButton) {
+            roleLabel2.setText("Manager");
+        } else if (e.getSource()==technicianButton) {
+            roleLabel2.setText("Technician");
+        } else if (e.getSource()==csButton) {
+            roleLabel2.setText("Counter Staff");
+        } else if (e.getSource()==customerButton) {
+            roleLabel2.setText("Customer");
         }
 
         else if (e.getSource()==searchButton) {
@@ -111,8 +123,8 @@ public class accountUpdate implements ActionListener{
                 boolean found = false;
                 try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
                     while ((line = br.readLine()) != null)  {
-                        if (line.contains("UserID: " + userID + " / ")) {
-                            String parts[] = line.split(" / ");
+                        if (line.contains("UserID: " + userID + " | ")) {
+                            String parts[] = line.split(" | ");
                             userIDLabel2.setText(parts[0].split(": ")[1]);
                             usernameField.setText(parts[1].split(": ")[1]);
                             passwordField.setText(parts[2].split(": ")[1]);
@@ -154,8 +166,8 @@ public class accountUpdate implements ActionListener{
                     java.util.List<String> lines = new java.util.ArrayList<>();
 
                     while ((line = br.readLine()) != null) {
-                        if (line.contains("UserID: " + userID + " / ")) {
-                            String updatedDetails = ("UserID: "+userID+" / Username: "+username+" / Password: "+password+" / Role: "+role);
+                        if (line.contains("UserID: " + userID + " | ")) {
+                            String updatedDetails = ("UserID: "+userID+" | Username: "+username+" | Password: "+password+" | Role: "+role);
                             lines.add(updatedDetails);
                         } else {
                              lines.add(line);
