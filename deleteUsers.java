@@ -8,25 +8,39 @@ import java.awt.event.*;
 
 public class deleteUsers extends JFrame implements ActionListener {
 
-	private JTable table;
-	private JLabel searchLabel = new JLabel("Enter: ");
+    private JTable table;
+    private JLabel searchLabel = new JLabel("Enter: ");
     private JButton deletebyNameButton = new JButton("Delete by Name");
     private JButton deletebyIDButton = new JButton("Delete by ID");
     private JButton returnButton = new JButton("Return");
     private JTextField searchTextField = new JTextField();
+    String role;
 
+    public deleteUsers() {
+        role = userUtilities.getUserRole();
+        if (role.equals("Manager")) {
+            setTitle("User Database");
+        } else {
+            setTitle("Customer Database");
+        }
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(600, 250);
+        setLocationRelativeTo(null);
 
-	public deleteUsers() {
-		setTitle("User Database");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(600, 250);
-		setLocationRelativeTo(null);
+        if (role.equals("Manager")) {
+            String[] columns = { "User ID", "Username", "Password", "User Role" };
+            DefaultTableModel model = new DefaultTableModel(columns, 0);
+            userUtilities.loadStaffData(model);
+            table = new JTable(model);
+        } else {
+            String[] columns = { "User ID", "Username", "Password", "User Role", "Legal Name", "Email", "Phone Number",
+                    "Address", "Gender", "Date of Birth" };
+            DefaultTableModel model = new DefaultTableModel(columns, 0);
+            userUtilities.loadCustomerData(model);
+            table = new JTable(model);
+        }
 
-		String[] columns = {"User ID", "Username", "Password", "User Role"};
-		DefaultTableModel model = new DefaultTableModel(columns, 0);
-		table = new JTable(model);
-		userUtilities.loadUserData(model);
-		add(new JScrollPane(table), "Center");
+        add(new JScrollPane(table), "Center");
 
         searchTextField.setPreferredSize(new Dimension(100, 25));
 
@@ -42,31 +56,33 @@ public class deleteUsers extends JFrame implements ActionListener {
         deletebyIDButton.setFocusable(false);
         returnButton.setFocusable(false);
 
-		JPanel panel = new JPanel();
-		panel.add(searchLabel);
-		panel.add(searchTextField);
-		panel.add(deletebyNameButton);
-		panel.add(deletebyIDButton);
-		panel.add(returnButton);
-		add(panel, "North");
+        JPanel panel = new JPanel();
+        panel.add(searchLabel);
+        panel.add(searchTextField);
+        panel.add(deletebyNameButton);
+        panel.add(deletebyIDButton);
+        panel.add(returnButton);
+        add(panel, "North");
 
-		setVisible(true);
-	}
+        setVisible(true);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==returnButton) {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == returnButton) {
             new accountManagement();
             dispose();
         }
         String search = searchTextField.getText().trim();
-        if (search.isEmpty()) return;
+        if (search.isEmpty())
+            return;
 
         try {
             ArrayList<String> lines = new ArrayList<>();
             try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
                 String line;
-                while ((line = br.readLine()) != null) lines.add(line);
+                while ((line = br.readLine()) != null)
+                    lines.add(line);
             }
 
             boolean found = false;
@@ -78,26 +94,31 @@ public class deleteUsers extends JFrame implements ActionListener {
                     }
                     boolean match = false;
                     if (!line.trim().isEmpty()) {
-                        String[] parts = line.split(" | ");
+                        String[] parts = line.split(" \\| ");
                         if (parts.length >= 4) {
                             String id = parts[0].split(": ")[1].trim();
                             String name = parts[1].split(": ")[1].trim();
-                            match = e.getSource() == deletebyIDButton 
-                                ? id.equals(search) 
-                                : name.equalsIgnoreCase(search);
+                            match = e.getSource() == deletebyIDButton
+                                    ? id.equals(search)
+                                    : name.equalsIgnoreCase(search);
                         }
                     }
-                    
+
                     fw.write(match ? "\n" : line + "\n");
-                    if (match) found = true;
+                    if (match)
+                        found = true;
                 }
             }
 
             if (found) {
-                JOptionPane.showMessageDialog(this, "User/UserID "+search+" deleted.");
+                JOptionPane.showMessageDialog(this, "User/UserID " + search + " deleted.");
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
                 model.setRowCount(0);
-                UserUtils.loadUserData(model);
+                if (role.equals("Manager")) {
+                    userUtilities.loadStaffData(model);
+                } else {
+                    userUtilities.loadCustomerData(model);
+                }
                 searchTextField.setText("");
             } else {
                 JOptionPane.showMessageDialog(this, "User not found");
@@ -105,9 +126,9 @@ public class deleteUsers extends JFrame implements ActionListener {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
-	}
+    }
 
     public static void main(String[] args) {
-		new deleteUsers();
-	}
+        new deleteUsers();
+    }
 }

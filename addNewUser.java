@@ -62,11 +62,12 @@ public class addNewUser implements ActionListener {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             String role = (String) roleComboBox.getSelectedItem();
+            String legalName = "", email = "", phoneNumber = "", address = "", gender = "", dob = "";
 
 
             //to check if spaces in the username actually affect the program
-            if (username.contains(" ") || password.contains(" ")){
-                JOptionPane.showMessageDialog(frame,"Username/Password cannot contain spaces.");
+            if (username.contains("|") || password.contains("|")){
+                JOptionPane.showMessageDialog(frame,"Username/Password cannot contain the '|' character.");
                 return;
             } else if (username.equals("") || password.equals("")) {
                 JOptionPane.showMessageDialog(frame,"Both fields must be filled out.");
@@ -76,8 +77,8 @@ public class addNewUser implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please select a role.");
                 return;
             }
-            if (!UserUtils.userExists(username)) {
-                UserUtils.saveUser(username, password, role, frame);
+            if (!userUtilities.userExists(username)) {
+                userUtilities.saveUser(username, password, role, frame, legalName, email, phoneNumber, address, gender, dob);
                 usernameField.setText("");
                 passwordField.setText("");
             } else {

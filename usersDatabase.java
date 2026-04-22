@@ -27,7 +27,11 @@ public class usersDatabase extends JFrame implements ActionListener {
 		String[] columns = {"User ID", "Username", "Password", "User Role"};
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		table = new JTable(model);
-		UserUtils.loadUserData(model);
+		if (userUtilities.getUserRole().equals("Manager")) {
+			userUtilities.loadStaffData(model);
+		} else {
+			userUtilities.loadCustomerData(model);
+		}
 		add(new JScrollPane(table), "Center");
 
         searchTextField.setPreferredSize(new Dimension(100, 25));
@@ -79,7 +83,7 @@ public class usersDatabase extends JFrame implements ActionListener {
 			try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
 				String line;
 				while ((line = reader.readLine()) != null) {
-					String[] parts = line.split(" | ");
+					String[] parts = line.split(" \\| ");
 					if (parts.length < 4) { continue; }
 					String userId = parts[0].split(": ")[1];
 					String username = parts[1].split(": ")[1];

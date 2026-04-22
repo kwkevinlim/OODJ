@@ -1,0 +1,4 @@
+Service ID: 1 | Service Name: Normal Service | Price: 200.00 | Duration: 1
+
+Service ID: 2 | Service Name: Major Service | Price: 500.00 | Duration: 3
+

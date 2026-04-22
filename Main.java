@@ -11,11 +11,11 @@ public class Main implements ActionListener{
     private JButton loginButton = new JButton("Sign In");
     private JButton signupButton = new JButton("Sign Up");
     private JButton resetButton = new JButton("Reset");
-    private JTextField userIDField = new JTextField();
+    private JTextField usernameField = new JTextField();
     private JPasswordField userPasswordField = new JPasswordField();
     private JLabel usernameLabel = new JLabel("Username: ");
     private JLabel userPasswordLabel = new JLabel("Password: ");
-    private JLabel messageLabel = new JLabel("APU Car Service Center Login/Sign up Page");
+    private JLabel messageLabel = new JLabel("APU Car Service Center Management System");
     private JLabel messageLabel2 = new JLabel("");
 
     //GUI
@@ -30,7 +30,7 @@ public class Main implements ActionListener{
         //User inputs (label = name, field = text field)
         usernameLabel.setBounds(50,100,75,25);
         userPasswordLabel.setBounds(50,150,75,25);
-        userIDField.setBounds(125,100,200,25);
+        usernameField.setBounds(125,100,200,25);
         userPasswordField.setBounds(125,150,200,25);
 
         //Interactive buttons
@@ -54,7 +54,7 @@ public class Main implements ActionListener{
         frame.add(messageLabel);
         frame.add(usernameLabel);
         frame.add(userPasswordLabel);
-        frame.add(userIDField);
+        frame.add(usernameField);
         frame.add(userPasswordField);
         frame.add(loginButton);
         frame.add(resetButton);
@@ -66,36 +66,40 @@ public class Main implements ActionListener{
     //BUTTON INTERACTIONS
     @Override
     public void actionPerformed(ActionEvent e) {
-        String userID = userIDField.getText();
+        String username = usernameField.getText();
         String userPassword = String.valueOf(userPasswordField.getPassword());
-        UserUtils.checkFilePath();
+        String legalName = "", email = "", phoneNumber = "", address = "", gender = "", dob = "";
+        userUtilities.checkFilePath();
 
         //RESET
         if(e.getSource()==resetButton) {
-            userIDField.setText("");
+            usernameField.setText("");
             userPasswordField.setText("");
         }
 
         //SIGNUP
         if (e.getSource()==signupButton) {
-            if (userID.isEmpty() || userPassword.isEmpty()) {
+            if (username.isEmpty() || userPassword.isEmpty()) {
                 messageLabel2.setForeground(Color.red);
                 messageLabel2.setText("Please make sure both fields are filled out.");
                 return;
             }
             //to check if spaces in username will affect the program (2)
-            if (userID.contains(" ")) {
+            if (username.contains(" ")) {
                 messageLabel2.setForeground(Color.red);
                 messageLabel2.setText("Username cannot include spaces.");
                 return;
             }
-            if (UserUtils.userExists(userID)) {
+            if (userUtilities.userExists(username)) {
                 messageLabel2.setForeground(Color.red);
                 messageLabel2.setText("Username is already in use, please enter a different username.");
             } else{
-                    JOptionPane.showMessageDialog(frame, "Account details are available, please select your role.", "Account creation complete.", JOptionPane.INFORMATION_MESSAGE);
-                    new AccountSignUp(userID, userPassword);
-                    userIDField.setText("");
+                    userUtilities.saveUser(username, userPassword, "Customer", frame, legalName, email, phoneNumber, address, gender, dob);
+                    JOptionPane.showMessageDialog(frame, "Account creation successful!", 
+                    "Account creation complete.", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // new AccountSignUp(userID, userPassword);
+                    usernameField.setText("");
                     userPasswordField.setText("");
             }
 }
@@ -104,32 +108,32 @@ public class Main implements ActionListener{
 
         //LOGIN
         if (e.getSource()==loginButton) {
-            if (userID.isEmpty() || userPassword.isEmpty()) {
+            if (username.isEmpty() || userPassword.isEmpty()) {
                 messageLabel2.setForeground(Color.red);
                 messageLabel2.setText("Please make sure both fields have been filled out.");
                 return;
             }
 
-            String role = (userLogin(userID, userPassword)); 
+            String role = (userLogin(username, userPassword)); 
             if ("Manager".equals(role)) {
-                UserUtils.setSessionRole(role);
+                userUtilities.setUserRole(role);
                 new managerPage();
                 frame.dispose();
             }
             else if ("Technician".equals(role)) {
-                UserUtils.setSessionRole(role);
-                new technicianPage();
-                frame.dispose();
+                userUtilities.setUserRole(role);
+                // new technicianPage();
+                // frame.dispose();
             } 
             else if ("Counter Staff".equals(role)) {
-                UserUtils.setSessionRole(role);
+                userUtilities.setUserRole(role);
                 new csPage();
                 frame.dispose();
             } 
             else if ("Customer".equals(role)) {
-                UserUtils.setSessionRole(role);
-                new customerPage();
-                frame.dispose();
+                userUtilities.setUserRole(role);
+                // new customerPage();
+                // frame.dispose();
             } 
             else{
                 messageLabel2.setForeground(Color.red);
@@ -143,7 +147,7 @@ public class Main implements ActionListener{
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))){
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(" | ");
+                String[] parts = line.split(" \\| ");
                 if (parts.length == 4) {
                     String storedUsername = parts[1].split(": ")[1].trim();
                     String storedPassword = parts[2].split(": ")[1].trim();
@@ -158,7 +162,7 @@ public class Main implements ActionListener{
     }
 
     public static void main(String[] args) {
-        UserUtils.newSession();
+        userUtilities.newSession();
         new Main();
     }
 }

@@ -1,5 +1,4 @@
 import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -8,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+//Manager's exclusive page
 public class accountUpdate implements ActionListener{
 
     private JFrame frame = new JFrame();
@@ -124,7 +124,7 @@ public class accountUpdate implements ActionListener{
                 try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
                     while ((line = br.readLine()) != null)  {
                         if (line.contains("UserID: " + userID + " | ")) {
-                            String parts[] = line.split(" | ");
+                            String parts[] = line.split(" \\| ");
                             userIDLabel2.setText(parts[0].split(": ")[1]);
                             usernameField.setText(parts[1].split(": ")[1]);
                             passwordField.setText(parts[2].split(": ")[1]);
@@ -156,9 +156,9 @@ public class accountUpdate implements ActionListener{
                 JOptionPane.showMessageDialog(frame, "Please enter UserID to modify.");
             } else if (username.equals("")|| password.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Username and Password Fields must be filled.");
-            } else if (username.contains(" ") || password.contains(" ")) {
-                JOptionPane.showMessageDialog(frame,"Username and Password cannot contain spaces.");
-            } else if (!username.equals(originalUsername) && UserUtils.userExists(username)) {
+            } else if (username.contains("|") || password.contains("|")) {
+                JOptionPane.showMessageDialog(frame,"Username and Password cannot contain the '|' character.");
+            } else if (!username.equals(originalUsername) && userUtilities.userExists(username)) {
                 JOptionPane.showMessageDialog(frame,"Username already in use, please enter another one.");
             } else {
                 try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
