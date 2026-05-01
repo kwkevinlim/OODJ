@@ -8,6 +8,7 @@ import java.awt.event.*;
 
 public class usersDatabase extends JFrame implements ActionListener {
 
+	//gui components
 	private JTable table;
 
 	private JLabel searchLabel = new JLabel("Search: ");
@@ -19,19 +20,27 @@ public class usersDatabase extends JFrame implements ActionListener {
 
 
 	public usersDatabase() {
+		//gui layout
 		setTitle("User Database");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600, 250);
 		setLocationRelativeTo(null);
 
-		String[] columns = {"User ID", "Username", "Password", "User Role"};
-		DefaultTableModel model = new DefaultTableModel(columns, 0);
-		table = new JTable(model);
-		if (userUtilities.getUserRole().equals("Manager")) {
+		//table data, only the relevant stuff here for staff, all details for customers
+		DefaultTableModel model;
+		if (userUtilities.getUserRole().equals("Manager")){
+			String[] columns = {"User ID", "Username", "Password", "User Role"};
+			model = new DefaultTableModel(columns, 0);
 			userUtilities.loadStaffData(model);
 		} else {
+			String[] columns = {"User ID", "Username", "Password", "User Role", 
+			"Legal Name", "Email", "Phone Number", "Address", "Gender", "Date of Birth"};
+			model = new DefaultTableModel(columns, 0);
 			userUtilities.loadCustomerData(model);
+
 		}
+		table = new JTable(model);
+
 		add(new JScrollPane(table), "Center");
 
         searchTextField.setPreferredSize(new Dimension(100, 25));
@@ -73,7 +82,8 @@ public class usersDatabase extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String searchValue = searchTextField.getText().trim().toLowerCase();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-	
+
+		//can search by username or id
 		if (e.getSource() == searchbyIDButton || e.getSource() == searchbyNameButton) {
 			int columnToSearch = (e.getSource() == searchbyIDButton) ? 0 : 1;
 			String selectedRole = roleChoice.getSelectedItem();

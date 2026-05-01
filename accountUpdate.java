@@ -27,7 +27,6 @@ public class accountUpdate implements ActionListener{
     private JButton managerButton = new JButton("Manager");
     private JButton technicianButton = new JButton("Technician");
     private JButton csButton = new JButton("Counter Staff");
-    private JButton customerButton = new JButton("Customer");
     private JButton resetButton = new JButton("Reset");
 
     private String originalUsername = "";
@@ -59,10 +58,9 @@ public class accountUpdate implements ActionListener{
         managerButton.setBounds(260, 60, 80 ,25);
         technicianButton.setBounds(360, 60, 80 ,25);
         csButton.setBounds(260, 60, 80 ,25);
-        customerButton.setBounds(360, 60, 80 ,25);
 
         JButton[] buttons = {searchButton, updateButton, managerButton, 
-        technicianButton, csButton, customerButton, resetButton};
+        technicianButton, csButton, resetButton};
         for (JButton button : buttons) {
             button.setFocusable(false);
             button.addActionListener(this);
@@ -90,7 +88,6 @@ public class accountUpdate implements ActionListener{
         frame.add(managerButton);
         frame.add(technicianButton);
         frame.add(csButton);
-        frame.add(customerButton);
         frame.add(userIDLabel2);
 
     }
@@ -98,6 +95,7 @@ public class accountUpdate implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==returnButton) {
+            //for when manager is done updating user details
             new accountManagement();
             frame.dispose();
         } else if (e.getSource()==resetButton) {
@@ -106,14 +104,14 @@ public class accountUpdate implements ActionListener{
             passwordField.setText("");
             roleLabel2.setText("");
             userIDLabel2.setText("");
+
+            //allows the manager to change the roles of users
         } else if (e.getSource()==managerButton) {
             roleLabel2.setText("Manager");
         } else if (e.getSource()==technicianButton) {
             roleLabel2.setText("Technician");
         } else if (e.getSource()==csButton) {
             roleLabel2.setText("Counter Staff");
-        } else if (e.getSource()==customerButton) {
-            roleLabel2.setText("Customer");
         }
 
         else if (e.getSource()==searchButton) {
@@ -121,6 +119,7 @@ public class accountUpdate implements ActionListener{
                 int userID = Integer.parseInt(searchField.getText());
                 String line;
                 boolean found = false;
+                //function to get data from users.txt
                 try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
                     while ((line = br.readLine()) != null)  {
                         if (line.contains("UserID: " + userID + " | ")) {
@@ -165,6 +164,7 @@ public class accountUpdate implements ActionListener{
                     String line;
                     java.util.List<String> lines = new java.util.ArrayList<>();
 
+                    //function to update lines
                     while ((line = br.readLine()) != null) {
                         if (line.contains("UserID: " + userID + " | ")) {
                             String updatedDetails = ("UserID: "+userID+" | Username: "+username+" | Password: "+password+" | Role: "+role);

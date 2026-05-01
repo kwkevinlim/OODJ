@@ -8,6 +8,7 @@ import java.io.FileReader;
 //general page for all users to edit, different from accountManagement for managers to edit users
 public class editProfile implements ActionListener {
 
+    //gui components
     private JFrame frame = new JFrame();
     private JLabel titleLabel = new JLabel("Edit Profile");
     private JButton saveButton = new JButton("Save Changes");
@@ -33,6 +34,7 @@ public class editProfile implements ActionListener {
 
 
     public editProfile() {
+        //gui layout
         role = userUtilities.getUserRole();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 480);
@@ -95,10 +97,10 @@ public class editProfile implements ActionListener {
     }
 
     public void roleShuffler(String role) {
+        //goes to the relevant page based on role in role.txt, since this is a universal profile page after all
         if (role.equals("Counter Staff")) {
             new csPage();
             frame.dispose();
-            // Perform actions based on the role
         } else if (role.equals("Manager")) {
             new managerPage();
             frame.dispose();
@@ -111,6 +113,7 @@ public class editProfile implements ActionListener {
         }
     }
 
+    //displays user details based on user id obtained from users.txt
     public String displayDetails() {
         String userID = userUtilities.getUserID();
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
@@ -142,6 +145,7 @@ public class editProfile implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveButton) {
+            //gets updated deatils, if any, from the fields and saves it to users.txt
             String userName = usernameField.getText();
             String password = passwordField.getText();
             String legalName = legalNameField.getText();

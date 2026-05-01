@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class serviceUtilities {
+
+    //helper to load data into table from services.txt
     public static void loadServiceData(DefaultTableModel model) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/services.txt"))) {
             String line;
@@ -30,6 +32,7 @@ public class serviceUtilities {
 
     }
 
+    //helper to write updated details to text file
     public static void updateServiceDetails(String serviceID, String serviceName, String price, String duration) {
                 List<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/services.txt"))) {
@@ -62,6 +65,7 @@ public class serviceUtilities {
         }
     }
 
+    //helper to get details based on serviceid from text file
       public static String getServiceDetails(String serviceID) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/services.txt"))) {
             String line;

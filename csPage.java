@@ -5,17 +5,18 @@ import java.awt.event.ActionListener;
 
 public class csPage implements ActionListener{
 
+    //gui components
     private JFrame frame = new JFrame();
     private JLabel title = new JLabel("Counter Staff Page");
     private JButton editProfileButton = new JButton("Edit Profile");
     private JButton manageAppointmentsButton = new JButton("Manage Appointments");
     private JButton manageCustomersButton = new JButton("Manage Customers");
-    private JButton manageServicesButton = new JButton("Manage Services");
     private JButton collectPaymentButton = new JButton("Collect Payment");
     private JButton genereateReceiptButton = new JButton("Generate Receipt");
     private JButton logoutButton = new JButton("Logout");
 
     public csPage() {
+        //gui layout
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
         frame.setLayout(null);
@@ -26,7 +27,6 @@ public class csPage implements ActionListener{
         editProfileButton.setBounds(100, 70, 200, 30);
         manageAppointmentsButton.setBounds(100, 110, 200, 30);
         manageCustomersButton.setBounds(100, 150, 200, 30);
-        manageServicesButton.setBounds(100, 190, 200, 30);
         collectPaymentButton.setBounds(100, 230, 200, 30);
         genereateReceiptButton.setBounds(100, 270, 200, 30);
         logoutButton.setBounds(100, 310, 200, 30);
@@ -34,7 +34,6 @@ public class csPage implements ActionListener{
         editProfileButton.addActionListener(this);
         manageAppointmentsButton.addActionListener(this);
         manageCustomersButton.addActionListener(this);
-        manageServicesButton.addActionListener(this);
         collectPaymentButton.addActionListener(this);
         genereateReceiptButton.addActionListener(this);
         logoutButton.addActionListener(this);
@@ -43,7 +42,6 @@ public class csPage implements ActionListener{
         frame.add(editProfileButton);
         frame.add(manageAppointmentsButton);
         frame.add(manageCustomersButton);
-        frame.add(manageServicesButton);
         frame.add(collectPaymentButton);
         frame.add(genereateReceiptButton);
         frame.add(logoutButton);
@@ -54,18 +52,15 @@ public class csPage implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==editProfileButton) {
-            //code to get session id (create a session id txt file?)
+            //goes to edit profile page
             new editProfile();
-            //counter staff to be changed to id once i learn it from claude
             frame.dispose();
         } else if (e.getSource()==manageAppointmentsButton) {
-            //code to manage appointments
+            //goes to appointments page
+            new appointments();
             frame.dispose();
         } else if (e.getSource()==manageCustomersButton) {
-            //code to manage customers
-            frame.dispose();
-        } else if (e.getSource()==manageServicesButton) {
-            //code to manage services
+            new usersDatabase();
             frame.dispose();
         } else if (e.getSource()==collectPaymentButton) {
             //code to collect payment

@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class addNewUser implements ActionListener {
+    //gui components
     private JFrame frame = new JFrame();
     private JTextField usernameField = new JTextField();
     private JPasswordField passwordField = new JPasswordField();
@@ -16,6 +17,7 @@ public class addNewUser implements ActionListener {
 
     public addNewUser() {
 
+        //gui layout
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
         frame.setLayout(null);
@@ -65,7 +67,7 @@ public class addNewUser implements ActionListener {
             String legalName = "", email = "", phoneNumber = "", address = "", gender = "", dob = "";
 
 
-            //to check if spaces in the username actually affect the program
+            //to prevent file errors later on since data is split using "|"
             if (username.contains("|") || password.contains("|")){
                 JOptionPane.showMessageDialog(frame,"Username/Password cannot contain the '|' character.");
                 return;
@@ -77,6 +79,7 @@ public class addNewUser implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Please select a role.");
                 return;
             }
+            //checks to see if user already exists via username, if no, save new user details
             if (!userUtilities.userExists(username)) {
                 userUtilities.saveUser(username, password, role, frame, legalName, email, phoneNumber, address, gender, dob);
                 usernameField.setText("");

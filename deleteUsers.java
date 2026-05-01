@@ -17,6 +17,7 @@ public class deleteUsers extends JFrame implements ActionListener {
     String role;
 
     public deleteUsers() {
+        //limits users based on role, managers can delete anyone but counter staff can only delete customers
         role = userUtilities.getUserRole();
         if (role.equals("Manager")) {
             setTitle("User Database");
@@ -78,6 +79,7 @@ public class deleteUsers extends JFrame implements ActionListener {
             return;
 
         try {
+            //delete users by overriding their deatil lines with an empty line
             ArrayList<String> lines = new ArrayList<>();
             try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
                 String line;

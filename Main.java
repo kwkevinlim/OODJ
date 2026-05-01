@@ -84,16 +84,18 @@ public class Main implements ActionListener{
                 messageLabel2.setText("Please make sure both fields are filled out.");
                 return;
             }
-            //to check if spaces in username will affect the program (2)
-            if (username.contains(" ")) {
+            //prevents file reading erros
+            if (username.contains("|")) {
                 messageLabel2.setForeground(Color.red);
-                messageLabel2.setText("Username cannot include spaces.");
+                messageLabel2.setText("Username cannot include '|' characters.");
                 return;
             }
+            //checks if username is taken
             if (userUtilities.userExists(username)) {
                 messageLabel2.setForeground(Color.red);
                 messageLabel2.setText("Username is already in use, please enter a different username.");
             } else{
+            //if all is ok then username and password is added to users.txt, but they need to update their details later in editProfile
                     userUtilities.saveUser(username, userPassword, "Customer", frame, legalName, email, phoneNumber, address, gender, dob);
                     JOptionPane.showMessageDialog(frame, "Account creation successful!", 
                     "Account creation complete.", JOptionPane.INFORMATION_MESSAGE);
@@ -115,6 +117,7 @@ public class Main implements ActionListener{
             }
 
             String role = (userLogin(username, userPassword)); 
+            //have to set access limits based on role
             if ("Manager".equals(role)) {
                 userUtilities.setUserRole(role);
                 new managerPage();
@@ -123,7 +126,7 @@ public class Main implements ActionListener{
             else if ("Technician".equals(role)) {
                 userUtilities.setUserRole(role);
                 // new technicianPage();
-                // frame.dispose();
+                frame.dispose();
             } 
             else if ("Counter Staff".equals(role)) {
                 userUtilities.setUserRole(role);
@@ -133,7 +136,7 @@ public class Main implements ActionListener{
             else if ("Customer".equals(role)) {
                 userUtilities.setUserRole(role);
                 // new customerPage();
-                // frame.dispose();
+                frame.dispose();
             } 
             else{
                 messageLabel2.setForeground(Color.red);
@@ -148,7 +151,7 @@ public class Main implements ActionListener{
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" \\| ");
-                if (parts.length == 4) {
+                if (parts.length >= 4) {
                     String storedUsername = parts[1].split(": ")[1].trim();
                     String storedPassword = parts[2].split(": ")[1].trim();
                     String storedRole = parts[3].split(": ")[1].trim();

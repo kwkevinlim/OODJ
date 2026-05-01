@@ -8,8 +8,9 @@ import java.io.FileReader;
 
 public class services extends JFrame implements ActionListener {
 
-    private JButton editMajorServiceButton = new JButton("Edit");
-    private JButton editMinorServiceButton = new JButton("Edit");
+    //gui components
+    private JButton editMajorServiceButton = new JButton("Edit Major Service Details");
+    private JButton editMinorServiceButton = new JButton("Edit Minor Service Details");
     private JButton returnButton = new JButton("Return to Manager Page");
     private JButton saveChangesButton = new JButton("Save Changes");
     private JButton cancelButton = new JButton("Cancel");
@@ -25,6 +26,7 @@ public class services extends JFrame implements ActionListener {
     private String serviceName = "";
 
     public services() {
+        //gui layout
         setTitle("Service Management");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600, 250);
@@ -73,6 +75,7 @@ public class services extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    //display details based on service id
     public String displayServiceDetails(String serviceID) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/services.txt"))) {
             String line;
@@ -97,12 +100,13 @@ public class services extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String price;
         String duration;
+        //only price and duration are allowed to be edited
         if (e.getSource() == editMajorServiceButton) {
             serviceID = table.getValueAt(0, 0).toString();
             serviceName = table.getValueAt(0, 1).toString();
             serviceIDLabel.setText("Service ID: " + serviceID);
             serviceNameLabel.setText("Service Name: " + serviceName);
-             displayServiceDetails(serviceID);
+            displayServiceDetails(serviceID);
             editDialog.setVisible(true);
         } else if (e.getSource() == editMinorServiceButton) {
             serviceID = table.getValueAt(1, 0).toString();
@@ -115,6 +119,7 @@ public class services extends JFrame implements ActionListener {
             new managerPage();
             dispose();
         } else if (e.getSource() == saveChangesButton) {
+            //saves updated price or duration
             price = priceField.getText();
             duration = durationField.getText();
             serviceUtilities.updateServiceDetails(serviceID, serviceName, price, duration);

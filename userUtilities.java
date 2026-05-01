@@ -14,6 +14,7 @@ public abstract class userUtilities {
 
     private userUtilities() {}
 
+    //helper to delete role from role.txt and id from id.txt when user logs out
     public static void newSession() {
         try (FileWriter writer = new FileWriter("txtfiles/role.txt", false)) {
         } catch (IOException e) {
@@ -25,6 +26,7 @@ public abstract class userUtilities {
         }
     }
 
+    //helper to set user role to role.txt, helps with access control
     public static void setUserRole(String role) {
         try (FileWriter writer = new FileWriter("txtfiles/role.txt", false)) {
             writer.write(role);
@@ -33,6 +35,7 @@ public abstract class userUtilities {
         }
     }
 
+    //helper to get user role, access control purposes
     public static String getUserRole() {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/role.txt"))) {
             return reader.readLine();
@@ -42,6 +45,7 @@ public abstract class userUtilities {
         }
     }
 
+    //helper to set user id based on current logged in user, also helps with access control, especially edit profile
         public static void setUserID(String ID) {
         try (FileWriter writer = new FileWriter("txtfiles/ID.txt", false)) {
             writer.write(ID);
@@ -50,6 +54,7 @@ public abstract class userUtilities {
         }
     }
 
+    //helper to check if the users.txt file exist
     public static void checkFilePath() {
         File file = new File("txtfiles/users.txt");
         try {
@@ -63,6 +68,7 @@ public abstract class userUtilities {
         }
     }
     
+    //helper to check if username has been taken
     public static boolean userExists(String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
             String line;
@@ -81,6 +87,7 @@ public abstract class userUtilities {
         return false;
     }
 
+    //helper to save user to users.txt
     public static void saveUser(String username, String password, String selectedRole, JFrame frame,
         String legalname, String email, String phoneNumber, String address, String gender, String dob
     ) {
@@ -126,6 +133,7 @@ public abstract class userUtilities {
         }
     }
 
+    //loads staff data for manager to access
     public static void loadStaffData(DefaultTableModel model) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
             String line;
@@ -144,6 +152,7 @@ public abstract class userUtilities {
         }
     }
 
+    //loads customer data for counter staff to access
     public static void loadCustomerData(DefaultTableModel model) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
             String line;
@@ -168,6 +177,7 @@ public abstract class userUtilities {
         }
     }
 
+    //helper to get user id based on current logged in user. Again, for access control
     public static String getUserID() {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/ID.txt"))) {
             String userID = reader.readLine();
@@ -179,6 +189,7 @@ public abstract class userUtilities {
         return null;
     }
 
+    //helper to get user details based on logged in id, for edit profile
     public static String getUserDetails(String userID) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
             String line;
@@ -194,6 +205,7 @@ public abstract class userUtilities {
         return null;
     }
 
+    //checks if profile is complete, used for edit profile and booking appointments
     public static boolean isProfileComplete (){
         String userID = getUserID();
         String userDetails = getUserDetails(userID);
@@ -214,6 +226,7 @@ public abstract class userUtilities {
         );
     }
 
+    //helper to update user details in the text file
     public static void updateUserDetails(String userID, String username, String password, String role, String legalName, String email, String phoneNumber, String address, String gender, String dob) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
