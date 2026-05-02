@@ -3,9 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class csPage implements ActionListener{
+public class csPage implements ActionListener {
 
-    //gui components
+    // gui components
     private JFrame frame = new JFrame();
     private JLabel title = new JLabel("Counter Staff Page");
     private JButton editProfileButton = new JButton("Edit Profile");
@@ -16,20 +16,33 @@ public class csPage implements ActionListener{
     private JButton logoutButton = new JButton("Logout");
 
     public csPage() {
-        //gui layout
+        // gui layout
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(400, 360);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
 
-        title.setBounds(100, 20, 200, 30);
+        title.setBounds(120, 10, 200, 30);
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        editProfileButton.setBounds(100, 70, 200, 30);
-        manageAppointmentsButton.setBounds(100, 110, 200, 30);
-        manageCustomersButton.setBounds(100, 150, 200, 30);
-        collectPaymentButton.setBounds(100, 230, 200, 30);
-        genereateReceiptButton.setBounds(100, 270, 200, 30);
-        logoutButton.setBounds(100, 310, 200, 30);
+        editProfileButton.setBounds(100, 50, 200, 30);
+        manageAppointmentsButton.setBounds(100, 90, 200, 30);
+        manageCustomersButton.setBounds(100, 130, 200, 30);
+        collectPaymentButton.setBounds(100, 170, 200, 30);
+        genereateReceiptButton.setBounds(100, 210, 200, 30);
+        logoutButton.setBounds(100, 250, 200, 30);
+        logoutButton.setBackground(new Color(220, 50, 50));
+        logoutButton.setForeground(Color.WHITE);
+        editProfileButton.setBackground(Color.LIGHT_GRAY);
+        manageAppointmentsButton.setBackground(Color.LIGHT_GRAY);
+        manageCustomersButton.setBackground(Color.LIGHT_GRAY);
+        collectPaymentButton.setBackground(Color.LIGHT_GRAY);
+        genereateReceiptButton.setBackground(Color.LIGHT_GRAY);
+        editProfileButton.setFocusable(false);
+        manageAppointmentsButton.setFocusable(false);
+        manageCustomersButton.setFocusable(false);
+        collectPaymentButton.setFocusable(false);
+        genereateReceiptButton.setFocusable(false);
+        logoutButton.setFocusable(false);
 
         editProfileButton.addActionListener(this);
         manageAppointmentsButton.addActionListener(this);
@@ -51,24 +64,24 @@ public class csPage implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==editProfileButton) {
-            //goes to edit profile page
+        if (e.getSource() == editProfileButton) {
+            // goes to edit profile page
             new editProfile();
             frame.dispose();
-        } else if (e.getSource()==manageAppointmentsButton) {
-            //goes to appointments page
+        } else if (e.getSource() == manageAppointmentsButton) {
+            // goes to appointments page
             new appointments();
             frame.dispose();
-        } else if (e.getSource()==manageCustomersButton) {
+        } else if (e.getSource() == manageCustomersButton) {
             new usersDatabase();
             frame.dispose();
-        } else if (e.getSource()==collectPaymentButton) {
-            //code to collect payment
+        } else if (e.getSource() == collectPaymentButton) {
+            new payments();
             frame.dispose();
-        } else if (e.getSource()==genereateReceiptButton) {
-            //code to generate receipt
+        } else if (e.getSource() == genereateReceiptButton) {
+            new payments();
             frame.dispose();
-        } else if (e.getSource()==logoutButton) {
+        } else if (e.getSource() == logoutButton) {
             new Main();
             frame.dispose();
         }

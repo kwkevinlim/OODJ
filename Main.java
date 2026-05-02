@@ -15,7 +15,8 @@ public class Main implements ActionListener{
     private JPasswordField userPasswordField = new JPasswordField();
     private JLabel usernameLabel = new JLabel("Username: ");
     private JLabel userPasswordLabel = new JLabel("Password: ");
-    private JLabel messageLabel = new JLabel("APU Car Service Center Management System");
+    private JLabel titleLabel = new JLabel("APU Car Service Center");
+    private JLabel titleLabel2 = new JLabel("Management System");
     private JLabel messageLabel2 = new JLabel("");
 
     //GUI
@@ -34,24 +35,29 @@ public class Main implements ActionListener{
         userPasswordField.setBounds(125,150,200,25);
 
         //Interactive buttons
-        messageLabel.setBounds(30,25,350,35);
-        messageLabel.setFont(new Font(null,Font.BOLD,18));
-        loginButton.setBounds(75,200,100,25);
+        titleLabel.setBounds(125,30,200,35);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        titleLabel2.setBounds(135,55,200,35);
+        titleLabel2.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        loginButton.setBounds(120,185,100,25);
         loginButton.setFocusable(false);
         loginButton.addActionListener(this);
-        loginButton.setBackground(Color.LIGHT_GRAY);
-        resetButton.setBounds(275,200,100,25);
+        loginButton.setBackground(new Color(0,180,0));
+        loginButton.setForeground(Color.WHITE);
+        resetButton.setBounds(175,215,100,25);
         resetButton.addActionListener(this);
         resetButton.setFocusable(false);
-        resetButton.setBackground(Color.LIGHT_GRAY);
-        resetButton.setForeground(new Color(249, 94, 61));
-        signupButton.setBounds(175,200,100,25);
+        resetButton.setBackground(new Color(220, 50, 50));
+        resetButton.setForeground(Color.white);
+        signupButton.setBounds(230,185,100,25);
         signupButton.setFocusable(false);
         signupButton.addActionListener(this);
-        signupButton.setBackground(Color.LIGHT_GRAY);
+        signupButton.setBackground(new Color(220, 150,0));
+        signupButton.setForeground(Color.WHITE);
         messageLabel2.setBounds(45,240,400,25);
 
-        frame.add(messageLabel);
+        frame.add(titleLabel);
+        frame.add(titleLabel2);
         frame.add(usernameLabel);
         frame.add(userPasswordLabel);
         frame.add(usernameField);
@@ -120,21 +126,25 @@ public class Main implements ActionListener{
             //have to set access limits based on role
             if ("Manager".equals(role)) {
                 userUtilities.setUserRole(role);
+                userUtilities.setUserID(getUserID(username));
                 new managerPage();
                 frame.dispose();
             }
             else if ("Technician".equals(role)) {
                 userUtilities.setUserRole(role);
+                userUtilities.setUserID(getUserID(username));
                 // new technicianPage();
                 frame.dispose();
             } 
             else if ("Counter Staff".equals(role)) {
                 userUtilities.setUserRole(role);
+                userUtilities.setUserID(getUserID(username));
                 new csPage();
                 frame.dispose();
             } 
             else if ("Customer".equals(role)) {
                 userUtilities.setUserRole(role);
+                userUtilities.setUserID(getUserID(username));
                 // new customerPage();
                 frame.dispose();
             } 
@@ -162,6 +172,22 @@ public class Main implements ActionListener{
             }
         } catch(IOException ignored) {}
         return null;
+    }
+
+    //helper to get userID for first-time login
+    private String getUserID(String username) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
+            String line;
+            while ((line=reader.readLine()) != null) {
+                String [] parts = line.split(" \\| ");
+                if (parts.length >= 2 && parts[1].split(": ")[1].trim().equals(username)) {
+                    return parts[0].split(": ")[1].trim();
+                }
+            } 
+        }catch (IOException e) {
+                e.printStackTrace();
+            } 
+            return null;
     }
 
     public static void main(String[] args) {

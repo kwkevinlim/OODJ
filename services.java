@@ -8,9 +8,9 @@ import java.io.FileReader;
 
 public class services extends JFrame implements ActionListener {
 
-    //gui components
+    // gui components
     private JButton editMajorServiceButton = new JButton("Edit Major Service Details");
-    private JButton editMinorServiceButton = new JButton("Edit Minor Service Details");
+    private JButton editNormalServiceButton = new JButton("Edit Normal Service Details");
     private JButton returnButton = new JButton("Return to Manager Page");
     private JButton saveChangesButton = new JButton("Save Changes");
     private JButton cancelButton = new JButton("Cancel");
@@ -26,7 +26,7 @@ public class services extends JFrame implements ActionListener {
     private String serviceName = "";
 
     public services() {
-        //gui layout
+        // gui layout
         setTitle("Service Management");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600, 250);
@@ -39,25 +39,28 @@ public class services extends JFrame implements ActionListener {
         add(new JScrollPane(table), "Center");
 
         editMajorServiceButton.addActionListener(this);
-        editMinorServiceButton.addActionListener(this);
+        editNormalServiceButton.addActionListener(this);
         returnButton.addActionListener(this);
         saveChangesButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
         editMajorServiceButton.setBackground(Color.LIGHT_GRAY);
-        editMinorServiceButton.setBackground(Color.LIGHT_GRAY);
-        returnButton.setBackground(Color.LIGHT_GRAY);
-        saveChangesButton.setBackground(Color.LIGHT_GRAY);
-        cancelButton.setBackground(Color.LIGHT_GRAY);
+        editNormalServiceButton.setBackground(Color.LIGHT_GRAY);
+        returnButton.setBackground(new Color(220, 50, 50));
+        returnButton.setForeground(Color.WHITE);
+        saveChangesButton.setBackground(new Color(0, 180, 0));
+        saveChangesButton.setForeground(Color.WHITE);
+        cancelButton.setBackground(new Color(220, 50, 50));
+        cancelButton.setForeground(Color.WHITE);
         editMajorServiceButton.setFocusable(false);
-        editMinorServiceButton.setFocusable(false);
+        editNormalServiceButton.setFocusable(false);
         returnButton.setFocusable(false);
         saveChangesButton.setFocusable(false);
         cancelButton.setFocusable(false);
 
         JPanel panel = new JPanel();
+        panel.add(editNormalServiceButton);
         panel.add(editMajorServiceButton);
-        panel.add(editMinorServiceButton);
         panel.add(returnButton);
         add(panel, "North");
 
@@ -71,11 +74,12 @@ public class services extends JFrame implements ActionListener {
         editDialog.add(durationField);
         editDialog.add(saveChangesButton);
         editDialog.add(cancelButton);
+        editDialog.setLocationRelativeTo(panel);
 
         setVisible(true);
     }
 
-    //display details based on service id
+    // display details based on service id
     public String displayServiceDetails(String serviceID) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/services.txt"))) {
             String line;
@@ -100,17 +104,17 @@ public class services extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String price;
         String duration;
-        //only price and duration are allowed to be edited
+        // only price and duration are allowed to be edited
         if (e.getSource() == editMajorServiceButton) {
-            serviceID = table.getValueAt(0, 0).toString();
-            serviceName = table.getValueAt(0, 1).toString();
+            serviceID = table.getValueAt(1, 0).toString();
+            serviceName = table.getValueAt(1, 1).toString();
             serviceIDLabel.setText("Service ID: " + serviceID);
             serviceNameLabel.setText("Service Name: " + serviceName);
             displayServiceDetails(serviceID);
             editDialog.setVisible(true);
-        } else if (e.getSource() == editMinorServiceButton) {
-            serviceID = table.getValueAt(1, 0).toString();
-            serviceName = table.getValueAt(1, 1).toString();
+        } else if (e.getSource() == editNormalServiceButton) {
+            serviceID = table.getValueAt(0, 0).toString();
+            serviceName = table.getValueAt(0, 1).toString();
             displayServiceDetails(serviceID);
             serviceIDLabel.setText("Service ID: " + serviceID);
             serviceNameLabel.setText("Service Name: " + serviceName);
@@ -119,7 +123,7 @@ public class services extends JFrame implements ActionListener {
             new managerPage();
             dispose();
         } else if (e.getSource() == saveChangesButton) {
-            //saves updated price or duration
+            // saves updated price or duration
             price = priceField.getText();
             duration = durationField.getText();
             serviceUtilities.updateServiceDetails(serviceID, serviceName, price, duration);

@@ -8,33 +8,32 @@ import java.awt.event.*;
 
 public class usersDatabase extends JFrame implements ActionListener {
 
-	//gui components
+	// gui components
 	private JTable table;
 
 	private JLabel searchLabel = new JLabel("Search: ");
-    private JButton searchbyNameButton = new JButton("Search by Name");
-    private JButton searchbyIDButton = new JButton("Search by ID");
-    private JButton returnButton = new JButton("Return");
-    private JTextField searchTextField = new JTextField();
+	private JButton searchbyNameButton = new JButton("Search by Name");
+	private JButton searchbyIDButton = new JButton("Search by ID");
+	private JButton returnButton = new JButton("Return");
+	private JTextField searchTextField = new JTextField();
 	private Choice roleChoice = new Choice();
 
-
 	public usersDatabase() {
-		//gui layout
+		// gui layout
 		setTitle("User Database");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(600, 250);
+		setSize(700, 250);
 		setLocationRelativeTo(null);
 
-		//table data, only the relevant stuff here for staff, all details for customers
+		// table data, only the relevant stuff here for staff, all details for customers
 		DefaultTableModel model;
-		if (userUtilities.getUserRole().equals("Manager")){
-			String[] columns = {"User ID", "Username", "Password", "User Role"};
+		if (userUtilities.getUserRole().equals("Manager")) {
+			String[] columns = { "User ID", "Username", "Password", "User Role" };
 			model = new DefaultTableModel(columns, 0);
 			userUtilities.loadStaffData(model);
 		} else {
-			String[] columns = {"User ID", "Username", "Password", "User Role", 
-			"Legal Name", "Email", "Phone Number", "Address", "Gender", "Date of Birth"};
+			String[] columns = { "User ID", "Username", "Password", "User Role",
+					"Legal Name", "Email", "Phone Number", "Address", "Gender", "Date of Birth" };
 			model = new DefaultTableModel(columns, 0);
 			userUtilities.loadCustomerData(model);
 
@@ -43,18 +42,19 @@ public class usersDatabase extends JFrame implements ActionListener {
 
 		add(new JScrollPane(table), "Center");
 
-        searchTextField.setPreferredSize(new Dimension(100, 25));
+		searchTextField.setPreferredSize(new Dimension(100, 25));
 
-        searchbyNameButton.addActionListener(this);
-        searchbyIDButton.addActionListener(this);
-        returnButton.addActionListener(this);
+		searchbyNameButton.addActionListener(this);
+		searchbyIDButton.addActionListener(this);
+		returnButton.addActionListener(this);
 
-        searchbyNameButton.setBackground(Color.LIGHT_GRAY);
-        searchbyIDButton.setBackground(Color.LIGHT_GRAY);
-        returnButton.setBackground(Color.LIGHT_GRAY);
-        searchbyNameButton.setFocusable(false);
-        searchbyIDButton.setFocusable(false);
-        returnButton.setFocusable(false);
+		searchbyNameButton.setBackground(Color.LIGHT_GRAY);
+		searchbyIDButton.setBackground(Color.LIGHT_GRAY);
+		returnButton.setBackground(new Color(220, 50, 50));
+		returnButton.setForeground(Color.WHITE);
+		searchbyNameButton.setFocusable(false);
+		searchbyIDButton.setFocusable(false);
+		returnButton.setFocusable(false);
 
 		roleChoice.add("View All");
 		roleChoice.add("Managers");
@@ -83,18 +83,20 @@ public class usersDatabase extends JFrame implements ActionListener {
 		String searchValue = searchTextField.getText().trim().toLowerCase();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-		//can search by username or id
+		// can search by username or id
 		if (e.getSource() == searchbyIDButton || e.getSource() == searchbyNameButton) {
 			int columnToSearch = (e.getSource() == searchbyIDButton) ? 0 : 1;
 			String selectedRole = roleChoice.getSelectedItem();
-	
+
 			model.setRowCount(0);
-	
+
 			try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
 				String line;
 				while ((line = reader.readLine()) != null) {
 					String[] parts = line.split(" \\| ");
-					if (parts.length < 4) { continue; }
+					if (parts.length < 4) {
+						continue;
+					}
 					String userId = parts[0].split(": ")[1];
 					String username = parts[1].split(": ")[1];
 					String password = parts[2].split(": ")[1];
@@ -104,9 +106,9 @@ public class usersDatabase extends JFrame implements ActionListener {
 
 					String columnValue = (columnToSearch == 0) ? userId : username;
 					boolean searchMatches = columnValue.toLowerCase().contains(searchValue);
-	
+
 					if (roleMatches && searchMatches) {
-						model.addRow(new Object[]{userId, username, password, role});
+						model.addRow(new Object[] { userId, username, password, role });
 					}
 				}
 			} catch (IOException ex) {

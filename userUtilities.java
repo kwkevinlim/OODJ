@@ -182,7 +182,6 @@ public abstract class userUtilities {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/ID.txt"))) {
             String userID = reader.readLine();
             return userID;
-            // code to use user ID
         } catch (IOException e) {
             System.out.println("Error reading file.");
         }

@@ -9,7 +9,7 @@ public class paymentUtilities {
     public static void savePayment(String paymentID, String appointmentID, String customerID, String csID,
             String paymentDate, String paymentTime) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("txtfiles/payments.txt", true))) {
-            writer.write("Payment ID: " + paymentID + " | Appointment ID: " + appointmentID + " | customeriD: "
+            writer.write("Payment ID: " + paymentID + " | Appointment ID: " + appointmentID + " | customerID: "
                     + customerID + " | csID: " + csID + " | Payment Date: " + paymentDate + " | Payment Time: "
                     + paymentTime);
             writer.newLine();
@@ -42,7 +42,7 @@ public class paymentUtilities {
                 if (line.trim().isEmpty())
                     continue;
                 String[] parts = line.split(" \\| ");
-                if (parts.length == 10 && line.contains("Appointment ID: " + appointmentID)) {
+                if (parts.length == 9 && line.contains("Appointment ID: " + appointmentID)) {
                     return true;
                 }
             }
@@ -63,7 +63,7 @@ public class paymentUtilities {
                 if (line.trim().isEmpty())
                     continue;
                 String[] parts = line.split(" \\| ");
-                if (parts.length == 10) {
+                if (parts.length == 9) {
                     String storedAppointmentID = parts[0].split(": ")[1].trim();
                     String customerName = parts[1].split(": ")[1].trim();
                     String appointmentSatus = parts[8].split(": ")[1].trim();
@@ -192,7 +192,7 @@ public class paymentUtilities {
             if (line.trim().isEmpty())
                 continue;
             String[] parts = line.split(" \\| ");
-            if (parts.length == 10 && line.contains("User ID: " + csID)) {
+            if (parts.length == 10 && line.contains("UserID: " + csID)) {
                 csName = parts[4].split(": ")[1].trim();
             }
         }

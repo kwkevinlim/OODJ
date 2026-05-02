@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 //Manager's exclusive page
-public class accountUpdate implements ActionListener{
+public class accountUpdate implements ActionListener {
 
     private JFrame frame = new JFrame();
     private JLabel searchLabel = new JLabel("Search:");
@@ -35,32 +35,32 @@ public class accountUpdate implements ActionListener{
 
         frame.setTitle("Update User Details");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(650,250);
+        frame.setSize(650, 250);
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
-		searchLabel.setBounds(20, 20, 50, 25);
-		searchField.setBounds(70, 20, 135, 25);
-		searchButton.setBounds(220, 20, 80, 25);
-		userIDLabel.setBounds(20, 60, 100, 25);
-		usernameField.setBounds(90, 110, 180, 25);
-		passwordField.setBounds(370, 110, 180, 25);
-		roleLabel.setBounds(120, 60, 100, 25);
+        searchLabel.setBounds(20, 20, 50, 25);
+        searchField.setBounds(70, 20, 135, 25);
+        searchButton.setBounds(220, 20, 80, 25);
+        userIDLabel.setBounds(20, 60, 100, 25);
+        usernameField.setBounds(90, 110, 180, 25);
+        passwordField.setBounds(370, 110, 180, 25);
+        roleLabel.setBounds(250, 60, 100, 25);
         resetButton.setBounds(260, 160, 100, 30);
-		updateButton.setBounds(380,160, 100, 30);
-		returnButton.setBounds(500, 160, 100, 30);
+        updateButton.setBounds(380, 160, 100, 30);
+        returnButton.setBounds(500, 160, 100, 30);
         usernameLabel.setBounds(20, 110, 80, 25);
         passwordLabel.setBounds(300, 110, 80, 25);
-        userIDLabel2.setBounds(67,60,60,25);
-        roleLabel2.setBounds(155,60,100,25);
-        //placeholder sizes, to be adjusted once running
-        managerButton.setBounds(260, 60, 80 ,25);
-        technicianButton.setBounds(360, 60, 80 ,25);
-        csButton.setBounds(260, 60, 80 ,25);
+        userIDLabel2.setBounds(67, 60, 60, 25);
+        roleLabel2.setBounds(155, 60, 100, 25);
+        managerButton.setBounds(290, 60, 100, 25);
+        technicianButton.setBounds(400, 60, 100, 25);
+        csButton.setBounds(510, 60, 120, 25);
+        frame.setSize(720, 250);
 
-        JButton[] buttons = {searchButton, updateButton, managerButton, 
-        technicianButton, csButton, resetButton};
+        JButton[] buttons = { searchButton, updateButton, managerButton,
+                technicianButton, csButton, resetButton };
         for (JButton button : buttons) {
             button.setFocusable(false);
             button.addActionListener(this);
@@ -69,20 +69,30 @@ public class accountUpdate implements ActionListener{
 
         returnButton.setFocusable(false);
         returnButton.addActionListener(this);
-        returnButton.setBackground(Color.red);
+        returnButton.setBackground(new Color(220, 50, 50));
         returnButton.setForeground(Color.white);
+        searchButton.setBackground(Color.LIGHT_GRAY);
+        updateButton.setBackground(new Color(0, 180, 0));
+        updateButton.setForeground(Color.WHITE);
+        resetButton.setBackground(new Color(220, 150, 0));
+        resetButton.setForeground(Color.WHITE);
+        returnButton.setBackground(new Color(220, 50, 50));
+        returnButton.setForeground(Color.WHITE);
+        managerButton.setBackground(Color.LIGHT_GRAY);
+        technicianButton.setBackground(Color.LIGHT_GRAY);
+        csButton.setBackground(Color.LIGHT_GRAY);
 
         frame.add(searchLabel);
-		frame.add(searchField);
-		frame.add(searchButton);
-		frame.add(userIDLabel);
+        frame.add(searchField);
+        frame.add(searchButton);
+        frame.add(userIDLabel);
         frame.add(usernameLabel);
         frame.add(passwordLabel);
-		frame.add(usernameField);
-		frame.add(passwordField);
-		frame.add(roleLabel);
-		frame.add(updateButton);
-		frame.add(returnButton);
+        frame.add(usernameField);
+        frame.add(passwordField);
+        frame.add(roleLabel);
+        frame.add(updateButton);
+        frame.add(returnButton);
         frame.add(resetButton);
         frame.add(roleLabel2);
         frame.add(managerButton);
@@ -94,34 +104,34 @@ public class accountUpdate implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==returnButton) {
-            //for when manager is done updating user details
+        if (e.getSource() == returnButton) {
+            // for when manager is done updating user details
             new accountManagement();
             frame.dispose();
-        } else if (e.getSource()==resetButton) {
+        } else if (e.getSource() == resetButton) {
             searchField.setText("");
             usernameField.setText("");
             passwordField.setText("");
             roleLabel2.setText("");
             userIDLabel2.setText("");
 
-            //allows the manager to change the roles of users
-        } else if (e.getSource()==managerButton) {
+            // allows the manager to change the roles of users
+        } else if (e.getSource() == managerButton) {
             roleLabel2.setText("Manager");
-        } else if (e.getSource()==technicianButton) {
+        } else if (e.getSource() == technicianButton) {
             roleLabel2.setText("Technician");
-        } else if (e.getSource()==csButton) {
+        } else if (e.getSource() == csButton) {
             roleLabel2.setText("Counter Staff");
         }
 
-        else if (e.getSource()==searchButton) {
+        else if (e.getSource() == searchButton) {
             try {
                 int userID = Integer.parseInt(searchField.getText());
                 String line;
                 boolean found = false;
-                //function to get data from users.txt
+                // function to get data from users.txt
                 try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
-                    while ((line = br.readLine()) != null)  {
+                    while ((line = br.readLine()) != null) {
                         if (line.contains("UserID: " + userID + " | ")) {
                             String parts[] = line.split(" \\| ");
                             userIDLabel2.setText(parts[0].split(": ")[1]);
@@ -133,7 +143,7 @@ public class accountUpdate implements ActionListener{
                             break;
                         }
                     }
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     System.out.println("BR ERROR");
                 }
                 if (found == false) {
@@ -145,32 +155,33 @@ public class accountUpdate implements ActionListener{
             }
         }
 
-        else if (e.getSource()==updateButton) {
+        else if (e.getSource() == updateButton) {
             String userID = userIDLabel2.getText();
             String username = usernameField.getText();
             String password = passwordField.getText();
             String role = roleLabel2.getText();
-            
+
             if (userID.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Please enter UserID to modify.");
-            } else if (username.equals("")|| password.equals("")) {
+            } else if (username.equals("") || password.equals("")) {
                 JOptionPane.showMessageDialog(frame, "Username and Password Fields must be filled.");
             } else if (username.contains("|") || password.contains("|")) {
-                JOptionPane.showMessageDialog(frame,"Username and Password cannot contain the '|' character.");
+                JOptionPane.showMessageDialog(frame, "Username and Password cannot contain the '|' character.");
             } else if (!username.equals(originalUsername) && userUtilities.userExists(username)) {
-                JOptionPane.showMessageDialog(frame,"Username already in use, please enter another one.");
+                JOptionPane.showMessageDialog(frame, "Username already in use, please enter another one.");
             } else {
                 try (BufferedReader br = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
                     String line;
                     java.util.List<String> lines = new java.util.ArrayList<>();
 
-                    //function to update lines
+                    // function to update lines
                     while ((line = br.readLine()) != null) {
                         if (line.contains("UserID: " + userID + " | ")) {
-                            String updatedDetails = ("UserID: "+userID+" | Username: "+username+" | Password: "+password+" | Role: "+role);
+                            String updatedDetails = ("UserID: " + userID + " | Username: " + username + " | Password: "
+                                    + password + " | Role: " + role);
                             lines.add(updatedDetails);
                         } else {
-                             lines.add(line);
+                            lines.add(line);
                         }
                     }
 

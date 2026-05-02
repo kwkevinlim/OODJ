@@ -19,7 +19,7 @@ public class payments implements ActionListener {
 
     // gui components
     private JFrame frame = new JFrame();
-    private JLabel titleLabel = new JLabel("Manage Appouintment Payments");
+    private JLabel titleLabel = new JLabel("Manage Appointment Payments");
     private JButton returnButton = new JButton("Return to Main Page");
     private JTable paymentStatusTable;
     private JDialog paymentCollectionDialog = new JDialog(frame, "Payment Collection", true);
@@ -30,6 +30,7 @@ public class payments implements ActionListener {
     private JButton searchButton = new JButton("Search");
     private Choice paymentStatusFilter = new Choice();
     private JButton generateReceiptButton = new JButton("Generate Receipts");
+    private JPanel buttonPanel = new JPanel(new FlowLayout());
     String appointmentID;
     String customerName;
     String paymentDate;
@@ -40,6 +41,11 @@ public class payments implements ActionListener {
     public payments() {
 
         // gui layout
+        frame.setTitle("Manage Appointment Payments");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(900, 500);
+        frame.setLocationRelativeTo(null);
+
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         frame.add(titleLabel, BorderLayout.NORTH);
@@ -50,17 +56,44 @@ public class payments implements ActionListener {
         paymentStatusTable = new JTable(model);
         tableCombiner(model);
 
-        frame.add( new JScrollPane(paymentStatusTable), BorderLayout.CENTER);
-        frame.add(returnButton);
-        frame.add(generateReceiptButton);
-        frame.add(collectPaymentButton);
+        frame.add(new JScrollPane(paymentStatusTable), BorderLayout.CENTER);
 
-        paymentCollectionDialog.add(searchBar);
+        buttonPanel.add(collectPaymentButton);
+        buttonPanel.add(generateReceiptButton);
+        buttonPanel.add(returnButton);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+
+        returnButton.setBackground(new Color(220, 50, 50));
+        returnButton.setForeground(Color.WHITE);
+        returnButton.setFocusable(false);
+        collectPaymentButton.setBackground(Color.LIGHT_GRAY);
+        collectPaymentButton.setFocusable(false);
+        generateReceiptButton.setBackground(Color.LIGHT_GRAY);
+        generateReceiptButton.setFocusable(false);
+        searchButton.setBackground(Color.LIGHT_GRAY);
+        searchButton.setFocusable(false);
+        confirmButton.setBackground(new Color(0, 180, 0));
+        confirmButton.setForeground(Color.WHITE);
+        confirmButton.setFocusable(false);
+        cancelButton.setBackground(new Color(220, 50, 50));
+        cancelButton.setForeground(Color.WHITE);
+        cancelButton.setFocusable(false);
+
+        paymentCollectionDialog.setLayout(new FlowLayout());
+        paymentCollectionDialog.setSize(400, 200);
+        paymentCollectionDialog.setLocationRelativeTo(frame);
+
+        searchLabel.setPreferredSize(new Dimension(200, 25));
+        searchBar.setPreferredSize(new Dimension(200, 25));
+        searchButton.setPreferredSize(new Dimension(80, 25));
+        confirmButton.setPreferredSize(new Dimension(130, 25));
+        cancelButton.setPreferredSize(new Dimension(80, 25));
+
         paymentCollectionDialog.add(searchLabel);
-        paymentCollectionDialog.add(collectPaymentButton);
-        paymentCollectionDialog.add(cancelButton);
+        paymentCollectionDialog.add(searchBar);
         paymentCollectionDialog.add(searchButton);
         paymentCollectionDialog.add(confirmButton);
+        paymentCollectionDialog.add(cancelButton);
         confirmButton.setVisible(false);
         cancelButton.setVisible(false);
 
@@ -73,6 +106,8 @@ public class payments implements ActionListener {
         searchButton.addActionListener(this);
         generateReceiptButton.addActionListener(this);
         confirmButton.addActionListener(this);
+
+        frame.setVisible(true);
     }
 
     public static void tableCombiner(DefaultTableModel model) {
@@ -130,7 +165,7 @@ public class payments implements ActionListener {
             paymentCollectionDialog.setVisible(false);
         } else if (e.getSource() == searchButton) {
             appointmentID = searchBar.getText();
-            String [] appointmentDetails = paymentUtilities.appointmentIDExtractor(appointmentID);
+            String[] appointmentDetails = paymentUtilities.appointmentIDExtractor(appointmentID);
             if (appointmentDetails != null) {
                 appointmentID = appointmentDetails[0];
                 customerName = appointmentDetails[1];
@@ -143,7 +178,8 @@ public class payments implements ActionListener {
                     cancelButton.setVisible(true);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Error, appointment record not found or appointment is still in progress.");
+                JOptionPane.showMessageDialog(null,
+                        "Error, appointment record not found or appointment is still in progress.");
             }
         } else if (e.getSource() == generateReceiptButton) {
             int selectedRow = paymentStatusTable.getSelectedRow();
