@@ -1,1 +1,7 @@
-Appointment ID: 1 | Customer ID: 1 | Technician ID: 1 | Customer Stars: 5 | Customer Feedback: Very Good Service | Technician Feedback: Very Easy Job
+Appointment ID: APT001 | Customer Name: Ali Hassan | Service: Normal Service | Technician Name: Rajesh Kumar | Car Model: Toyota Vios | Car Plate Number: WA1234B | Appointment Date: 01-04-2026 | Appointment Time: 09:00 | Appointment Status: Pending
+
+Appointment ID: APT002 | Customer Name: Ali Hassan | Service: Major Service | Technician Name: Rajesh Kumar | Car Model: Honda Civic | Car Plate Number: WC771W | Appointment Date: 10-04-2026 | Appointment Time: 10:00 | Appointment Status: In Progress
+
+Appointment ID: APT003 | Customer Name: Ali Hassan | Service: Normal Service | Technician Name: Rajesh Kumar | Car Model: Perodua Myvi | Car Plate Number: VDG5678 | Appointment Date: 15-04-2026 | Appointment Time: 14:00 | Appointment Status: Completed
+
+Appointment ID: APT004 | Customer Name: Ali Hassan | Service: Major Service | Technician Name: Rajesh Kumar | Car Model: Proton X50 | Car Plate Number: BNP2233 | Appointment Date: 20-04-2026 | Appointment Time: 11:00 | Appointment Status: Completed

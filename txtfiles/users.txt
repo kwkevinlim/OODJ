@@ -1,1 +1,8 @@
+UserID: 1 | Username: admin | Password: admin123 | Role: Manager | Legal Name: Amanda Tan | Email: amanda@apuasc.com | Phone Number: 0123456789 | Address: Kuala Lumpur | Gender: Female | Date of Birth: 01-01-1985
+
+UserID: 2 | Username: counter1 | Password: counter123 | Role: Counter Staff | Legal Name: Kevin Lee | Email: kevin@apuasc.com | Phone Number: 0129876543 | Address: Rawang, Selangor | Gender: Male | Date of Birth: 15-03-1998
+
+UserID: 3 | Username: tech1 | Password: tech123 | Role: Technician | Legal Name: Rajesh Kumar | Email: rajesh@apuasc.com | Phone Number: 0111234567 | Address: Petaling Jaya, Selangor | Gender: Male | Date of Birth: 20-06-1990
+
+UserID: 4 | Username: customer1 | Password: cust123 | Role: Customer | Legal Name: Ali Hassan | Email: ali@gmail.com | Phone Number: 0167894321 | Address: Shah Alam, Selangor | Gender: Male | Date of Birth: 10-11-1995
 
