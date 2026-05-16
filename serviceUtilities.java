@@ -11,6 +11,16 @@ import javax.swing.table.DefaultTableModel;
 
 public class serviceUtilities {
 
+    //function to convert string from services.txt to Service object
+    public static service convertToObject(String line) {
+        String[] parts = line.split(" \\| ");
+        String serviceID = parts[0].split(": ")[1];
+        String serviceName = parts[1].split(": ")[1];
+        String price = parts[2].split(": ")[1];
+        String duration = parts[3].split(": ")[1];
+        return new service(serviceID, serviceName, price, duration);
+    }
+
     //helper to load data into table from services.txt
     public static void loadServiceData(DefaultTableModel model) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/services.txt"))) {
@@ -18,13 +28,8 @@ public class serviceUtilities {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty())
                     continue;
-                String[] data = line.split(" \\| ");
-                String serviceID = data[0].split(": ")[1];
-                String serviceName = data[1].split(": ")[1];
-                String price = data[2].split(": ")[1];
-                String duration = data[3].split(": ")[1];
-                data = new String[] { serviceID, serviceName, price, duration };
-                model.addRow(data);
+                service s = convertToObject(line);
+                model.addRow(new Object[]{s.getServiceID(), s.getServiceName(), s.getPrice(), s.getDuration()});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,13 +71,14 @@ public class serviceUtilities {
     }
 
     //helper to get details based on serviceid from text file
-      public static String getServiceDetails(String serviceID) {
+      public static service getServiceDetails(String serviceID) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/services.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
-                if (line.contains("Service ID: " + serviceID + " |")) {
-                    return line;
+                service s = convertToObject(line);
+                if (s.getServiceID().equals(serviceID)) {
+                    return s;
                 }
             }
         } catch (IOException e) {

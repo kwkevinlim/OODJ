@@ -70,11 +70,11 @@ public class managerPage implements ActionListener {
             frame.dispose();
         } else if (e.getSource() == manageServicesButton) {
             // goes to services page
-            new services();
+            new servicesPage();
             frame.dispose();
         } else if (e.getSource() == manageAppointmentsButton) {
             // goes to appointments page
-            new appointments();
+            new appointmentsPage();
             frame.dispose();
         } else if (e.getSource() == viewFeedbackButton) {
             // goes to feedback page

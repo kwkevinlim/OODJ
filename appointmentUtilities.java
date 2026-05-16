@@ -7,6 +7,22 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class appointmentUtilities {
+
+    //helper to convert strings from appointment.txt to objects
+    public static appointment convertToObject(String line) {
+        String [] parts = line.split(" \\| ");
+        String appointmentID = parts[0].split(": ")[1].trim();
+        String customerName = parts[1].split(": ")[1].trim();
+        String service = parts[2].split(": ")[1].trim();
+        String technicianName = parts[3].split(": ")[1].trim();
+        String carModel = parts[4].split(": ")[1].trim();
+        String carPlateNumber = parts[5].split(": ")[1].trim();
+        String appointmentDate = parts[6].split(": ")[1].trim();
+        String appointmentTime = parts[7].split(": ")[1].trim();
+        String appointmentStatus = parts[8].split(": ")[1].trim();
+        return new appointment(appointmentID, customerName, service, technicianName, carModel, carPlateNumber, appointmentDate, appointmentTime, appointmentStatus);
+    }
+
     //helper to load appointment details into table
     public static void loadAppointmentData(DefaultTableModel model) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/appointments.txt"))) {
@@ -14,17 +30,10 @@ public class appointmentUtilities {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty())
                     continue;
-                String[] parts = line.split(" \\| ");
-                String appointmentID = parts[0].split(": ")[1].trim();
-                String customerName = parts[1].split(": ")[1].trim();
-                String service = parts[2].split(": ")[1].trim();
-                String technicianName = parts[3].split(": ")[1].trim();
-                String carModel = parts[4].split(": ")[1].trim();
-                String carPlateNumber = parts[5].split(": ")[1].trim();
-                String appointmentDate = parts[6].split(": ")[1].trim();
-                String appointmentTime = parts[7].split(": ")[1].trim();
-                String appointmentStatus = parts[8].split(": ")[1].trim();
-                model.addRow(new Object[] { appointmentID, customerName, service, technicianName, carModel, carPlateNumber, appointmentDate, appointmentTime, appointmentStatus });
+                appointment a = convertToObject(line);
+                model.addRow(new Object[] {a.getAppointmentID(), a.getCustomerName(), a.getService(), 
+                    a.getTechnicianName(), a.getCarModel(), a.getCarPlateNumber(), 
+                    a.getAppointmentDate(), a.getAppointmentTime(), a.getAppointmentStatus()});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,10 +127,9 @@ public class appointmentUtilities {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty())
                     continue;
-                if (line.contains("Role: Customer")) {
-                    String[] parts = line.split(" \\| ");
-                    String customerName = parts[4].split(": ")[1].trim();
-                    customerNameChoice.add(customerName);
+                user u = userUtilities.convertToObject(line);
+                if (u.getRole().equals("Customer")){
+                    customerNameChoice.add(u.getLegalName());
                 }
             }
         } catch (Exception e) {
@@ -154,10 +162,9 @@ public class appointmentUtilities {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty())
                     continue;
-                if (line.contains("Role: Technician")) {
-                    String[] parts = line.split(" \\| ");
-                    String technicianName = parts[4].split(": ")[1].trim();
-                    technicianNameChoice.add(technicianName);
+                user u = userUtilities.convertToObject(line);
+                if (u.getRole().equals("Technician")){
+                    technicianNameChoice.add(u.getLegalName());
                 }
             }
         } catch (Exception e) {

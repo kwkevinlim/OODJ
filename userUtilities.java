@@ -12,6 +12,23 @@ import javax.swing.table.DefaultTableModel;
 
 public abstract class userUtilities {
 
+    //helper to convert user string rows in users.txt to user objects
+    public static user convertToObject(String line) {
+        String[] parts = line.split(" \\| ");
+        String userID = parts[0].split(": ")[1].trim();
+        String username = parts[1].split(": ")[1].trim();
+        String password = parts[2].split(": ")[1].trim();
+        String role = parts[3].split(": ")[1].trim();
+        String legalname = parts.length > 4 ? parts[4].split(": ")[1].trim() : "";
+        String email = parts.length > 5 ? parts[5].split(": ")[1].trim() : "";
+        String phoneNumber = parts.length > 6 ? parts[6].split(": ")[1].trim() : "";
+        String address = parts.length > 7 ? parts[7].split(": ")[1].trim() : "";
+        String gender = parts.length > 8 ? parts[8].split(": ")[1].trim() : "";
+        String dob = parts.length > 9 ? parts[9].split(": ")[1].trim() : "";
+        return new user(userID, username, password, role, legalname, email, 
+            phoneNumber, address, gender, dob);
+    }
+
     private userUtilities() {}
 
     //helper to delete role from role.txt and id from id.txt when user logs out
@@ -139,13 +156,9 @@ public abstract class userUtilities {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
-                String[] parts = line.split(" \\| ");
-                String userId = parts[0].split(": ")[1];
-                String username = parts[1].split(": ")[1];
-                String password = parts[2].split(": ")[1];
-                String role = parts[3].split(": ")[1];
-                if (role.equals("Customer")) continue;
-                model.addRow(new Object[]{userId, username, password, role});
+                user u = convertToObject(line);
+                if (u.getRole().equals("Customer")) continue;
+                model.addRow(new Object[]{u.getUserID(), u.getUsername(), u.getPassword(), u.getRole()});
             }
         } catch (IOException e) {
             System.out.println("Error");
@@ -158,20 +171,12 @@ public abstract class userUtilities {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
-                String[] parts = line.split(" \\| ");
-                String userId = parts[0].split(": ")[1];
-                String username = parts[1].split(": ")[1];
-                String password = parts[2].split(": ")[1];
-                String role = parts[3].split(": ")[1];
-                if (!role.equals("Customer")) continue;
-                String legalName = parts[4].split(": ")[1];
-                String email = parts[5].split(": ")[1]; 
-                String phoneNumber = parts[6].split(": ")[1];
-                String address = parts[7].split(": ")[1];
-                String gender = parts[8].split(": ")[1];
-                String dob = parts[9].split(": ")[1];
-                model.addRow(new Object[]{userId, username, password, role, legalName, email, phoneNumber, address, gender, dob});
-            }
+                user u = convertToObject(line);
+                if (!u.getRole().equals("Customer")) continue;
+                model.addRow(new Object[]{u.getUserID(), u.getUsername(), u.getPassword(), u.getRole()
+                    , u.getLegalName(), u.getEmail(), u.getPhoneNumber(), u.getAddress(), u.getGender(), 
+                    u.getDob()});
+                }
         } catch (IOException e) {
             System.out.println("Error");
         }
@@ -189,13 +194,14 @@ public abstract class userUtilities {
     }
 
     //helper to get user details based on logged in id, for edit profile
-    public static String getUserDetails(String userID) {
+    public static user getUserDetails(String userID) {
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
-                if (line.contains("UserID: " + userID + " |")) {
-                    return line;
+                user u = convertToObject(line);
+                if (!u.getUserID().equals(userID)){
+                    return u;
                 }
             }
         } catch (IOException e) {
@@ -206,22 +212,19 @@ public abstract class userUtilities {
 
     //checks if profile is complete, used for edit profile and booking appointments
     public static boolean isProfileComplete (){
-        String userID = getUserID();
-        String userDetails = getUserDetails(userID);
-        if (userDetails == null) {
+        user u = getUserDetails(getUserID());
+        if (u == null) {
             return false;
         }
-
-        String [] parts = userDetails.split(" \\| ");
-        return !(
-            parts[1].split(": ")[1].trim().isEmpty() && 
-            parts[2].split(": ")[1].trim().isEmpty() && 
-            parts[4].split(": ")[1].trim().isEmpty() && 
-            parts[5].split(": ")[1].trim().isEmpty() && 
-            parts[6].split(": ")[1].trim().isEmpty() && 
-            parts[7].split(": ")[1].trim().isEmpty() && 
-            parts[8].split(": ")[1].trim().isEmpty() && 
-            parts[9].split(": ")[1].trim().isEmpty()
+        return ! (
+            u.getUsername().isEmpty()&&
+            u.getPassword().isEmpty()&&
+            u.getLegalName().isEmpty()&&
+            u.getEmail().isEmpty()&&    
+            u.getPhoneNumber().isEmpty()&&
+            u.getAddress().isEmpty()&&
+            u.getGender().isEmpty()&&
+            u.getDob().isEmpty()
         );
     }
 

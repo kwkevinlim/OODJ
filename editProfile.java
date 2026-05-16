@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 
 //general page for all users to edit, different from accountManagement for managers to edit users
 public class editProfile implements ActionListener {
 
-    //gui components
+    // gui components
     private JFrame frame = new JFrame();
     private JLabel titleLabel = new JLabel("Edit Profile");
     private JButton saveButton = new JButton("Save Changes");
@@ -29,12 +30,11 @@ public class editProfile implements ActionListener {
     private JTextField emailField = new JTextField();
     private JTextField phoneNumberField = new JTextField();
     private JTextField addressField = new JTextField();
-    private JTextField dobfield = new JTextField();
+    private JSpinner dobSelector = new JSpinner(new SpinnerDateModel());
     static String role;
 
-
     public editProfile() {
-        //gui layout
+        // gui layout
         role = userUtilities.getUserRole();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 480);
@@ -56,7 +56,8 @@ public class editProfile implements ActionListener {
         addressField.setBounds(150, 250, 150, 25);
         roleLabel.setBounds(50, 330, 200, 25);
         genderComboBox.setBounds(150, 290, 150, 25);
-        dobfield.setBounds(150, 370, 150, 25);
+        dobSelector.setEditor(new JSpinner.DateEditor(dobSelector, "yyyy-MM-dd"));
+        dobSelector.setBounds(150, 370, 150, 25);
         saveButton.setBounds(50, 410, 120, 25);
         cancelButton.setBounds(200, 410, 120, 25);
         genderLabel.setBounds(50, 290, 100, 25);
@@ -86,7 +87,7 @@ public class editProfile implements ActionListener {
         frame.add(addressField);
         frame.add(roleLabel);
         frame.add(genderComboBox);
-        frame.add(dobfield);
+        frame.add(dobSelector);
         frame.add(saveButton);
         frame.add(cancelButton);
         frame.add(genderLabel);
@@ -97,7 +98,8 @@ public class editProfile implements ActionListener {
     }
 
     public void roleShuffler(String role) {
-        //goes to the relevant page based on role in role.txt, since this is a universal profile page after all
+        // goes to the relevant page based on role in role.txt, since this is a
+        // universal profile page after all
         if (role.equals("Counter Staff")) {
             new csPage();
             frame.dispose();
@@ -113,7 +115,7 @@ public class editProfile implements ActionListener {
         }
     }
 
-    //displays user details based on user id obtained from users.txt
+    // displays user details based on user id obtained from users.txt
     public String displayDetails() {
         String userID = userUtilities.getUserID();
         try (BufferedReader reader = new BufferedReader(new FileReader("txtfiles/users.txt"))) {
@@ -131,10 +133,14 @@ public class editProfile implements ActionListener {
                     phoneNumberField.setText(parts[6].split(": ")[1].trim());
                     addressField.setText(parts[7].split(": ")[1].trim());
                     genderComboBox.setSelectedItem(parts[8].split(": ")[1].trim());
-                    dobfield.setText(parts[9].split(": ")[1].trim());
+                    try {
+                        dobSelector.setValue(new SimpleDateFormat("yyyy-MM-dd").parse(parts[9].split(": ")[1].trim()));
+                    } catch (Exception ex) {
+                        dobSelector.setValue(new java.util.Date());
+                    }
                     return line;
                 }
-                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error reading file.");
@@ -145,7 +151,7 @@ public class editProfile implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveButton) {
-            //gets updated deatils, if any, from the fields and saves it to users.txt
+            // gets updated deatils, if any, from the fields and saves it to users.txt
             String userName = usernameField.getText();
             String password = passwordField.getText();
             String legalName = legalNameField.getText();
@@ -153,17 +159,17 @@ public class editProfile implements ActionListener {
             String phoneNumber = phoneNumberField.getText();
             String address = addressField.getText();
             String gender = (String) genderComboBox.getSelectedItem();
-            String dob = dobfield.getText();
-            if (userName.isEmpty() || password.isEmpty() || legalName.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || 
-                address.isEmpty() || dob.isEmpty()) {
+            String dob = new SimpleDateFormat("yyyy-MM-dd").format(dobSelector.getValue());
+            if (userName.isEmpty() || password.isEmpty() || legalName.isEmpty() || email.isEmpty()
+                    || phoneNumber.isEmpty() || address.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Please make sure all fields have been filled out.");
                 return;
             } else {
                 String userID = userUtilities.getUserID();
-                String existingDetails = userUtilities.getUserDetails(userID);
-                String [] parts = existingDetails.split(" \\| ");
-                String existingRole = parts[3].split(": ")[1].trim();
-                userUtilities.updateUserDetails(userID, userName, password, existingRole, legalName, email, phoneNumber, address, gender, dob);
+                user existingDetails = userUtilities.getUserDetails(userID);
+                String existingRole = existingDetails.getRole();
+                userUtilities.updateUserDetails(userID, userName, password, existingRole, legalName, email, phoneNumber,
+                        address, gender, dob);
             }
             roleShuffler(role);
         } else if (e.getSource() == cancelButton) {

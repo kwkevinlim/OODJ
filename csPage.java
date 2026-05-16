@@ -70,16 +70,16 @@ public class csPage implements ActionListener {
             frame.dispose();
         } else if (e.getSource() == manageAppointmentsButton) {
             // goes to appointments page
-            new appointments();
+            new appointmentsPage();
             frame.dispose();
         } else if (e.getSource() == manageCustomersButton) {
             new usersDatabase();
             frame.dispose();
         } else if (e.getSource() == collectPaymentButton) {
-            new payments();
+            new paymentsPage();
             frame.dispose();
         } else if (e.getSource() == genereateReceiptButton) {
-            new payments();
+            new paymentsPage();
             frame.dispose();
         } else if (e.getSource() == logoutButton) {
             new Main();

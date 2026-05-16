@@ -5,6 +5,18 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class paymentUtilities {
+    //helper to convert payment records from payment.txt to objects
+    public static payment convertToObject(String line) {
+        String[] parts = line.split(" \\| ");
+        String paymentID = parts[0].split(": ")[1].trim();
+        String appointmentID = parts[1].split(": ")[1].trim();
+        String customerID = parts[2].split(": ")[1].trim();
+        String csID = parts[3].split(": ")[1].trim();
+        String paymentDate = parts[4].split(": ")[1].trim();
+        String paymentTime = parts[5].split(": ")[1].trim();
+        return new payment(paymentID, appointmentID, customerID, csID, paymentDate, paymentTime);
+    }
+
     // helper to add new payment records
     public static void savePayment(String paymentID, String appointmentID, String customerID, String csID,
             String paymentDate, String paymentTime) {
@@ -87,7 +99,10 @@ public class paymentUtilities {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
-                if (line.contains("Appointment ID: " + appointmentID)) return true;
+                payment p = convertToObject(line);
+                if (p.getAppointmentID().equals(appointmentID)){
+                    return true;
+                }
             }
             return false;
         } catch (Exception e) {
