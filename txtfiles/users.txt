@@ -6,3 +6,4 @@ UserID: 3 | Username: tech1 | Password: tech123 | Role: Technician | Legal Name:
 
 UserID: 4 | Username: customer1 | Password: cust123 | Role: Customer | Legal Name: Ali Hassan | Email: ali@gmail.com | Phone Number: 0167894321 | Address: Shah Alam, Selangor | Gender: Male | Date of Birth: 10-11-1995
 
+UserID: 5 | Username: customer2 | Password: cust456 | Role: Customer | Legal Name: Amanda Lee | Email: amlee@gmail.com | Phone Number: 0123347628 | Address: Sepang, Selangor | Gender: Female | Date of Birth: 4-3-1998

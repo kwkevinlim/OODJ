@@ -1,0 +1,19 @@
+=========================================
+  APU Automotive Service Center Sdn Bhd
+             Service Receipt
+=========================================
+Receipt ID: REC007
+Receipt Date: 02-05-2026, 22:52
+-----------------------------------------
+Customer Name: Ali Hassan
+Car Model: Proton X50
+Car Plate Number: BNP2233
+-----------------------------------------
+Service Type: Major Service
+Drop Off Date: 20-04-2026, 11:00
+Technician: Rajesh Kumar
+-----------------------------------------
+Total Paid: RM 500.00
+Cashier: null
+=========================================
+Thank You For Using Our Services. Please Visit Again!

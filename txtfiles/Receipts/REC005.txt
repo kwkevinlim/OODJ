@@ -1,0 +1,19 @@
+=========================================
+  APU Automotive Service Center Sdn Bhd
+             Service Receipt
+=========================================
+Receipt ID: REC005
+Receipt Date: 02-05-2026, 22:50
+-----------------------------------------
+Customer Name: null
+Car Model: null
+Car Plate Number: null
+-----------------------------------------
+Service Type: null
+Drop Off Date: null, null
+Technician: null
+-----------------------------------------
+Total Paid: RM null
+Cashier: null
+=========================================
+Thank You For Using Our Services. Please Visit Again!
