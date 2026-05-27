@@ -41,7 +41,7 @@ public class appointmentsPage implements ActionListener, manageable {
     private JLabel appointmentStatusLabel = new JLabel("Appointment Status: ");
     private Choice appointmentStatusChoice = new Choice();
 
-    // NEW: Priority field for Counter Staff
+
     private JLabel priorityLabel = new JLabel("Priority: ");
     private Choice priorityChoice = new Choice();
 
@@ -121,7 +121,7 @@ public class appointmentsPage implements ActionListener, manageable {
         cancelButton.setFocusable(false);
         deleteAppointmentButton.setFocusable(false);
 
-        // NEW: Dialog changed from 9 rows to 10 rows because Priority is added
+
         JPanel dialogFields = new JPanel(new GridLayout(10, 2, 5, 5));
 
         dialogFields.add(appointmentIDLabel);
@@ -175,7 +175,7 @@ public class appointmentsPage implements ActionListener, manageable {
         appointmentStatusChoice.add("Completed");
         appointmentStatusChoice.add("Cancelled");
 
-        // NEW: Priority options
+
         priorityChoice.add("Normal");
         priorityChoice.add("High");
 
@@ -213,7 +213,7 @@ public class appointmentsPage implements ActionListener, manageable {
 
                     appointmentStatusChoice.select(parts[8].split(": ")[1].trim());
 
-                    // NEW: Load priority if it exists, otherwise default to Normal
+
                     if (line.contains("Priority:")) {
                         String priority = getValue(line, "Priority:");
                         priorityChoice.select(priority);
@@ -248,7 +248,7 @@ public class appointmentsPage implements ActionListener, manageable {
 
         String appointmentStatus = "Pending";
 
-        // NEW: Get selected priority
+
         String selectedPriority = priorityChoice.getSelectedItem();
 
         if (e.getSource() == returnButton) {
@@ -274,7 +274,7 @@ public class appointmentsPage implements ActionListener, manageable {
             appointmentStatusChoice.select("Pending");
             appointmentStatusChoice.setEnabled(false);
 
-            // NEW: Counter staff can choose priority when creating appointment
+
             priorityChoice.select("Normal");
             priorityChoice.setEnabled(true);
 
@@ -327,7 +327,7 @@ public class appointmentsPage implements ActionListener, manageable {
                         appointmentStatus
                 );
 
-                // NEW: Add priority after appointment is created
+
                 updateAppointmentPriority(appointmentID, selectedPriority);
 
             } else {
@@ -343,7 +343,7 @@ public class appointmentsPage implements ActionListener, manageable {
                         appointmentStatus
                 );
 
-                // NEW: Preserve/update priority after appointment is edited
+
                 updateAppointmentPriority(appointmentID, selectedPriority);
             }
 
@@ -370,7 +370,7 @@ public class appointmentsPage implements ActionListener, manageable {
         }
     }
 
-    // NEW: Helper method to read values like Priority from appointment line
+
     private String getValue(String line, String key) {
         String[] parts = line.split("\\|");
 
@@ -385,7 +385,7 @@ public class appointmentsPage implements ActionListener, manageable {
         return "";
     }
 
-    // NEW: This method updates or adds Priority inside appointments.txt
+
     private void updateAppointmentPriority(String appointmentID, String selectedPriority) {
         ArrayList<String> updatedLines = new ArrayList<>();
 
