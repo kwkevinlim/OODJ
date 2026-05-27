@@ -133,7 +133,7 @@ public class Main implements ActionListener{
             else if ("Technician".equals(role)) {
                 userUtilities.setUserRole(role);
                 userUtilities.setUserID(getUserID(username));
-                // new technicianPage();
+                new technicianPage();
                 frame.dispose();
             } 
             else if ("Counter Staff".equals(role)) {
